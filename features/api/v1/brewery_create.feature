@@ -42,7 +42,7 @@ Feature: Create a brewery
       | name | url |
       |      | WTF |
     Then I should receive a 400 response
-    And I should see JSON:
+    And I should see the following JSON response:
       """
         { "errors" : {
             "name" : ["can't be blank"],

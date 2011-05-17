@@ -32,19 +32,19 @@ end
 describe User, "being updated" do
   subject { Factory(:user) }
 
-  let!(:public_token) { subject.public_token }
-  let!(:private_token) { subject.private_token }
+  let!(:public_token) { subject.public_token.to_s }
+  let!(:private_token) { subject.private_token.to_s }
 
   it "does not regenerate public API token" do
     subject.updated_at = Time.now
     subject.save
-    subject.public_token.should == public_token
+    subject.public_token.to_s.should == public_token
   end
 
   it "does not regenerate private API token" do
     subject.updated_at = Time.now
     subject.save
-    subject.private_token.should == private_token
+    subject.private_token.to_s.should == private_token
   end
 end
 

@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   protected
 
   def generate_tokens
-    self.public_token  ||= Digest::SHA256.hexdigest("-#{id}--#{Time.now.to_f}--#{rand}-")
-    self.private_token ||= Digest::SHA256.hexdigest("-#{id}--#{Time.now.to_f}--#{rand}-")
+    self.public_token  ||= BCrypt::Password.create([Time.now.to_f, rand].join)
+    self.private_token ||= BCrypt::Password.create([Time.now.to_f, rand].join)
   end
 end

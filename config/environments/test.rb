@@ -6,4 +6,9 @@ OpenBeerDatabase::Application.configure do
   config.action_dispatch.show_exceptions   = false
   config.action_controller.perform_caching = false
   config.action_controller.allow_forgery_protection = false
+  config.after_initialize do
+    silence_warnings do
+      BCrypt::Engine::DEFAULT_COST = BCrypt::Engine::MIN_COST
+    end
+  end
 end

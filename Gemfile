@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 
+gem "bcrypt-ruby",      "2.1.4", :require => "bcrypt"
 gem "hoptoad_notifier", "2.4.9"
 gem "pg",               "0.11.0"
 gem "rails",            "3.0.7"

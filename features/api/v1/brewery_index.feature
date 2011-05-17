@@ -5,11 +5,15 @@ Feature: List breweries
   I want to be able to list breweries
 
   Background:
+    Given the following user exists:
+      | public_token | private_token |
+      | a1b2c3       | x1y2z3        |
     Given the following breweries exist:
-      | id | user          | name          | url                            | created_at | updated_at |
-      | 1  |               | Southern Tier | http://southerntierbrewing.com | 2010-01-01 | 2010-02-02 |
-      | 2  | token: a1b2c3 | Abita         | http://abita.com               | 2010-03-03 | 2010-04-04 |
-      | 3  |               | Russian River | http://russianriverbrewing.com | 2010-05-05 | 2010-06-06 |
+      | id | user                  | name          | url                            | created_at | updated_at |
+      | 1  |                       | Southern Tier | http://southerntierbrewing.com | 2010-01-01 | 2010-02-02 |
+      | 2  | private_token: x1y2z3 | Abita         | http://abita.com               | 2010-03-03 | 2010-04-04 |
+      | 3  |                       | Russian River | http://russianriverbrewing.com | 2010-05-05 | 2010-06-06 |
+      | 4  | private_token: d1e2f3 | Stone         | http://stonebrewing.com        | 2010-07-07 | 2010-08-08 |
 
   Scenario: Listing breweries
     When I send an API GET request to /v1/breweries.json
@@ -80,8 +84,39 @@ Feature: List breweries
         }
       """
 
-  Scenario: Listing breweries, with entries from an API client
+  Scenario: Listing breweries, with entries from an API client using a public token
     When I send an API GET request to /v1/breweries.json?token=a1b2c3
+    Then I should receive a 200 response
+    And I should see the following JSON response:
+      """
+        { "page"      : 1,
+          "pages"     : 1,
+          "total"     : 3,
+          "breweries" : [
+            { "id"         : 1,
+              "name"       : "Southern Tier",
+              "url"        : "http://southerntierbrewing.com",
+              "created_at" : "2010-01-01T00:00:00Z",
+              "updated_at" : "2010-02-02T00:00:00Z"
+            },
+            { "id"         : 2,
+              "name"       : "Abita",
+              "url"        : "http://abita.com",
+              "created_at" : "2010-03-03T00:00:00Z",
+              "updated_at" : "2010-04-04T00:00:00Z"
+            },
+            { "id"         : 3,
+              "name"       : "Russian River",
+              "url"        : "http://russianriverbrewing.com",
+              "created_at" : "2010-05-05T00:00:00Z",
+              "updated_at" : "2010-06-06T00:00:00Z"
+            }
+          ]
+        }
+      """
+
+  Scenario: Listing breweries, with entries from an API client using a private token
+    When I send an API GET request to /v1/breweries.json?token=x1y2z3
     Then I should receive a 200 response
     And I should see the following JSON response:
       """

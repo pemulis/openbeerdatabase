@@ -13,7 +13,13 @@ class Api::V1::BaseController < ApplicationController
   end
 
   def current_user
-    User.find_by_token(params[:token]) if params[:token].present?
+    return unless params[:token].present?
+
+    if request.get?
+      User.find_by_token(params[:token])
+    else
+      User.find_by_private_token(params[:token])
+    end
   end
   memoize :current_user
 

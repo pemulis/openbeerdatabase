@@ -78,8 +78,16 @@ describe Brewery, ".paginate" do
                                                                  :order      => "id ASC")
   end
 
-  it "includes user specific records when provided with a token" do
-    Brewery.paginate(:token => user.token)
+  it "includes user specific records when provided with a public token" do
+    Brewery.paginate(:token => user.public_token)
+    Brewery.should have_received(:paginate_without_options).with(:page       => 1,
+                                                                 :per_page   => 50,
+                                                                 :conditions => ["user_id IS NULL OR user_id = ?", user.id],
+                                                                 :order      => "id ASC")
+  end
+
+  it "includes user specific records when provided with a private token" do
+    Brewery.paginate(:token => user.private_token)
     Brewery.should have_received(:paginate_without_options).with(:page       => 1,
                                                                  :per_page   => 50,
                                                                  :conditions => ["user_id IS NULL OR user_id = ?", user.id],

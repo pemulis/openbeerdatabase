@@ -3,7 +3,6 @@
 ## API
 
 * Add ability for administrative users.
-* Add a read-only API key.
 * Switch to Apigee.
 * Webhooks for record updates. (Subscribe to all or specific records.)
 

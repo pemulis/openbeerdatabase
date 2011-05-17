@@ -15,4 +15,4 @@
 
 ## Examples
 
-* Create an example iPhone and/or iPad application with the API read-only key.
+* Create an example iPhone and/or iPad application with a public API key.

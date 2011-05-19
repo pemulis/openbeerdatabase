@@ -29,8 +29,8 @@ class User < ActiveRecord::Base
   end
 
   def generate_tokens
-    self.public_token  ||= BCrypt::Password.create([Time.now.to_f, rand].join)
-    self.private_token ||= BCrypt::Password.create([Time.now.to_f, rand].join)
+    self.public_token  ||= Digest::SHA256.hexdigest([Time.now.to_f, rand].join)
+    self.private_token ||= Digest::SHA256.hexdigest([Time.now.to_f, rand].join)
   end
 
   def hash_password

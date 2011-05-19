@@ -15,4 +15,5 @@ module OpenBeerDatabase
   end
 end
 
+require "./lib/authentication"
 require "./lib/custom_pagination"

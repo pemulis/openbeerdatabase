@@ -1,3 +1,3 @@
 class ApplicationController < ActionController::Base
-  extend ActiveSupport::Memoizable
+  include Authentication
 end

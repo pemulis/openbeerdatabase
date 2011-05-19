@@ -1,0 +1,17 @@
+<header>
+  <h1>Account Information</h1>
+</header>
+
+<p>Details for accessing the API with your account.</p>
+
+<h2>Public Token</h2>
+
+<p>For read-only applications and may be exposed publicly.</p>
+
+<div class="highlight"><pre><code><%= @user.public_token %></pre></code></div>
+
+<h2>Private Token</h2>
+
+<p>For creating and deleting records on your account and <strong><em>should be protected</em></strong>.</p>
+
+<div class="highlight"><pre><code><%= @user.private_token %></pre></code></div>

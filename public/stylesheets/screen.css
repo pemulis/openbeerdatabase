@@ -80,7 +80,7 @@ body > header h2 {
 #request-token a {
   position: absolute;
   top: 14px;
-  right: 13px;
+  right: 4px;
   background: #6EAE3C;
   background: -moz-linear-gradient(0% 100% 90deg, #6EAE3C 0%, #6EAE3C 50%, #53961F 50%, #53961F 100%);
   background: -webkit-gradient(linear, 0% 50%, 0% 51%, from(#6EAE3C), to(#53961F));
@@ -165,28 +165,38 @@ section label {
 section label {
   margin: 12px 0 2px 0;
   font-weight: bold;
-  display: inline-block;
+  display: block;
 }
 
-section input[type="text"] {
+section form > div {
+  overflow: hidden;
+}
+
+section input {
   width: 240px;
   padding: 4px;
   font-size: 12px;
   outline: 0;
+  float: left;
 }
 
-section input[type="checkbox"] {
-  margin-left: 8px;
-}
-
-section input[type="checkbox"] + label {
-  margin: 0;
-  font-size: 12px;
-  font-weight: normal;
+section .field_with_errors input {
+  background: #FEE;
+  margin-right: 8px;
 }
 
 section button {
   margin: 16px 0 0 0;
+  display: block;
+}
+
+section p.error {
+  color: #900;
+  margin: 0;
+  height: 20px;
+  font-size: 12px;
+  line-height: 26px;
+  overflow: hidden;
 }
 
 section p.warning {

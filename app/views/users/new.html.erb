@@ -1,21 +1,37 @@
 <header>
-  <h1>Request an API Token</h1>
+  <h1>Sign Up for an API Token</h1>
 </header>
 
-<p>If you want to create records you will need an API token. If you are only querying records, you do not.</p>
+<p>Just a minute from using the most pleasant database around.</p>
 
-<form action="http://openbeerdatabase.createsend.com/t/r/s/ndyukh/" method="post">
-  <label for="name">Name:</label><br>
-  <input type="text" name="cm-name" id="name"><br>
+<%= form_for(@user) do |form| %>
+  <label for="user_name">Name:</label>
 
-  <label for="ndyukh-ndyukh">E-mail:</label><br>
-  <input type="text" name="cm-ndyukh-ndyukh" id="ndyukh-ndyukh"><br>
+  <div>
+    <%= form.text_field :name %>
+    <p class="error"><%= @user.errors[:name].first %></p>
+  </div>
 
-  <label for="Usage">Usage:</label><br>
-  <input type="checkbox" name="cm-fo-htiuui" id="cm743345" value="743345"> <label for="cm743345">Desktop Application</label><br>
-  <input type="checkbox" name="cm-fo-htiuui" id="cm743346" value="743346"> <label for="cm743346">Mobile Application</label><br>
-  <input type="checkbox" name="cm-fo-htiuui" id="cm743347" value="743347"> <label for="cm743347">Web Application</label><br>
-  <input type="checkbox" name="cm-fo-htiuui" id="cm743348" value="743348"> <label for="cm743348">Other</label><br>
+  <label for="user_email">E-mail:</label>
 
-  <button type="submit">Send Request</button>
-</form>
+  <div>
+    <%= form.text_field :email %>
+    <p class="error"><%= @user.errors[:email].first %></p>
+  </div>
+
+  <label for="user_password">Password:</label>
+
+  <div>
+    <%= form.password_field :password %>
+    <p class="error"><%= @user.errors[:password].first %></p>
+  </div>
+
+  <label for="user_password_confirmation">Password Confirmation:</label>
+
+  <div>
+    <%= form.password_field :password_confirmation %>
+    <p class="error"><%= @user.errors[:password_confirmation].first %></p>
+  </div>
+
+  <button type="submit">Sign Up</button>
+<% end %>

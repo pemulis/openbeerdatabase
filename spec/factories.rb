@@ -12,4 +12,8 @@ Factory.define :brewery do |brewery|
 end
 
 Factory.define :user do |user|
+  user.name                  { "Sue" }
+  user.sequence(:email)      { |n| "user#{n}@example.com" }
+  user.password              { "test" }
+  user.password_confirmation { "test" }
 end

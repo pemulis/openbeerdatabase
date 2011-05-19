@@ -3,7 +3,11 @@ module NavigationHelpers
     case page_name
 
     when /^the home\s?page$/
-      root_url
+      root_path
+
+    when /^the account page for "([^"]+)"$/
+      user = User.find_by_name!($1)
+      user_path(user)
 
     when /^the API beer page for "([^"]+)"$/
       beer = Beer.find_by_name!($1)

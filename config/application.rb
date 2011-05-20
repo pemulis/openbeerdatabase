@@ -9,9 +9,6 @@ module OpenBeerDatabase
     config.encoding  = "utf-8"
     config.time_zone = "UTC"
     config.middleware.use Rack::JSONP
-    config.after_initialize do
-      require "./lib/extensions/activemodel/errors"
-    end
   end
 end
 

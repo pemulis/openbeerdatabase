@@ -71,10 +71,10 @@ Feature: Create a beer
     And I should see the following JSON response:
       """
         { "errors" : {
-            "abv"         : ["can't be blank", "is not a number"],
             "brewery_id"  : ["can't be blank"],
+            "name"        : ["can't be blank"],
             "description" : ["can't be blank"],
-            "name"        : ["can't be blank"]
+            "abv"         : ["can't be blank", "is not a number"]
           }
         }
       """

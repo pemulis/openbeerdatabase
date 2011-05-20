@@ -187,7 +187,6 @@ section .field_with_errors input {
 
 section button {
   margin: 16px 0 0 0;
-  display: block;
 }
 
 section p.error {

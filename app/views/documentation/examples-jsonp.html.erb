@@ -20,11 +20,13 @@
 <ol id="example-breweries"></ol>
 
 <% content_for :javascript do -%>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 <script>
 $.getJSON("http://api.openbeerdatabase.com/v1/breweries.json?callback=?", function(response) {
+  var breweries = $("#example-breweries");
+
   $(response.breweries).each(function() {
-    $("#example-breweries").append($("<li>", { text : this.name }));
+    breweries.append($("<li>", { text : this.name }));
   });
 });
 </script>

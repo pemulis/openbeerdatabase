@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="<%= compute_public_path("screen", "stylesheets", "css") %>" media="screen">
 
   <% unless %w(development test).include?(Rails.env) -%>
-  <script type="text/javascript">
+  <script>
     var _gaq = _gaq || [];
     _gaq.push(["_setAccount", "UA-8648594-10"]);
     _gaq.push(["_trackPageview"]);

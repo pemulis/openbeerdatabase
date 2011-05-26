@@ -3,6 +3,7 @@
 ## API
 
 * Add ability for administrative users.
+* Allowing searching of beers and breweries by name.
 * Figure out how to allow users to update records.
 * Webhooks for record updates. (Subscribe to all or specific records.)
 

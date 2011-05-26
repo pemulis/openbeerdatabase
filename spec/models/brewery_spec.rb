@@ -148,3 +148,16 @@ describe Brewery, ".paginate with custom sort column and direction" do
     end
   end
 end
+
+describe Brewery, "being destroyed" do
+  subject { Factory(:brewery) }
+
+  it "is destroyed when it has zero beers" do
+    subject.destroy.should be_true
+  end
+
+  it "is not destroyed when it has beers" do
+    Factory(:beer, :brewery => subject)
+    subject.destroy.should be_false
+  end
+end

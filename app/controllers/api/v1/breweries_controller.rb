@@ -26,9 +26,7 @@ class Api::V1::BreweriesController < Api::V1::BaseController
     brewery = Brewery.find(params[:id])
 
     if brewery.user == current_user
-      if brewery.beers.count == 0
-        brewery.destroy
-
+      if brewery.destroy
         head :ok
       else
         head :bad_request

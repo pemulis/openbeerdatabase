@@ -15,6 +15,8 @@ class Brewery < ActiveRecord::Base
 
   attr_accessible :name, :url
 
+  before_destroy :ensure_no_associated_beers_exist
+
   private
 
   def self.conditions_for_pagination(options)
@@ -25,5 +27,9 @@ class Brewery < ActiveRecord::Base
     else
       "user_id IS NULL"
     end
+  end
+
+  def ensure_no_associated_beers_exist
+    beers.count == 0
   end
 end

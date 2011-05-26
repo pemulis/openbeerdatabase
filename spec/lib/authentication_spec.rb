@@ -231,14 +231,14 @@ describe Authentication, "#user_from_token" do
     subject.stubs(:params => params)
     subject.stubs(:request => request)
 
-    User.stubs(:find_by_token)
+    User.stubs(:find_by_public_or_private_token)
     User.stubs(:find_by_private_token)
   end
 
   describe "when no token is present" do
     it "does not attempt to find a user" do
       subject.__send__(:user_from_token)
-      User.should have_received(:find_by_token).never
+      User.should have_received(:find_by_public_or_private_token).never
       User.should have_received(:find_by_private_token).never
     end
 
@@ -252,12 +252,12 @@ describe Authentication, "#user_from_token" do
       params[:token] = token
       request.stubs(:get? => true)
 
-      User.stubs(:find_by_token => user)
+      User.stubs(:find_by_public_or_private_token => user)
     end
 
     it "attempts to find the user by token" do
       subject.__send__(:user_from_token)
-      User.should have_received(:find_by_token).with(token).once
+      User.should have_received(:find_by_public_or_private_token).with(token).once
       User.should have_received(:find_by_private_token).never
     end
 
@@ -277,7 +277,7 @@ describe Authentication, "#user_from_token" do
     it "attempts to find the user by token" do
       subject.__send__(:user_from_token)
       User.should have_received(:find_by_private_token).with(token).once
-      User.should have_received(:find_by_token).never
+      User.should have_received(:find_by_public_or_private_token).never
     end
 
     it "returns the user" do

@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
 
-  def self.find_by_token(token)
+  def self.find_by_public_or_private_token(token)
     where(["public_token = :token OR private_token = :token", :token => token]).first
   end
 

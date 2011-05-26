@@ -36,7 +36,7 @@ module Authentication
     return unless params[:token].present?
 
     if request.get?
-      User.find_by_token(params[:token])
+      User.find_by_public_or_private_token(params[:token])
     else
       User.find_by_private_token(params[:token])
     end

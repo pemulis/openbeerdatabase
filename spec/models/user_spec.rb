@@ -82,14 +82,14 @@ describe User, "being updated" do
   end
 end
 
-describe User, ".find_by_token" do
+describe User, ".find_by_public_or_private_token" do
   let(:user) { Factory(:user) }
 
   it "finds a user by public token" do
-    User.find_by_token(user.public_token).should == user
+    User.find_by_public_or_private_token(user.public_token).should == user
   end
 
   it "finds a user by private token" do
-    User.find_by_token(user.private_token).should == user
+    User.find_by_public_or_private_token(user.private_token).should == user
   end
 end

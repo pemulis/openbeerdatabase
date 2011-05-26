@@ -20,7 +20,7 @@ class Brewery < ActiveRecord::Base
   private
 
   def self.conditions_for_pagination(options)
-    user = User.find_by_token(options[:token]) if options[:token].present?
+    user = User.find_by_public_or_private_token(options[:token]) if options[:token].present?
 
     if user.present?
       ["user_id IS NULL OR user_id = ?", user.id]

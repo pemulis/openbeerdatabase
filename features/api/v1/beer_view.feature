@@ -9,7 +9,7 @@ Feature: View a beer
       | id | name  |
       | 1  | Abita |
 
-  Scenario: Viewing a global beer
+  Scenario: Viewing a beer
     Given the following beer exists:
       | id | user | brewery     | name               | description | abv | created_at | updated_at |
       | 1  |      | name: Abita | Strawberry Harvest | Southern.   | 4.2 | 2010-01-01 | 2010-02-02 |
@@ -30,7 +30,7 @@ Feature: View a beer
         }
       """
 
-  Scenario: Viewing a beer, with JSONP
+  Scenario: Viewing a beer with JSONP
     Given the following beer exists:
       | id | user | brewery     | name               | description | abv | created_at | updated_at |
       | 1  |      | name: Abita | Strawberry Harvest | Southern.   | 4.2 | 2010-01-01 | 2010-02-02 |
@@ -93,18 +93,18 @@ Feature: View a beer
         }
       """
 
-  Scenario: Viewing a beer, not owned by the requesting API client
+  Scenario: Viewing a beer not owned by the requesting API client
     Given the following beer exists:
       | id | user                 |
       | 1  | public_token: a1b2c3 |
     When I send an API GET request to /v1/beers/1.json?token=d4e5f6
     Then I should receive a 401 response
 
-  Scenario: Viewing a beer, that does not exist
+  Scenario: Viewing a beer that does not exist
     When I send an API GET request to /v1/beers/1.json
     Then I should receive a 404 response
 
-  Scenario: Viewing a beer, in an invalid format
+  Scenario: Viewing a beer in an invalid format
     Given the following beer exists:
       | id |
       | 1  |

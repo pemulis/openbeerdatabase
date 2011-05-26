@@ -55,7 +55,7 @@ Feature: List beers
         }
       """
 
-  Scenario: Listing beers, with JSONP
+  Scenario: Listing beers with JSONP
     When I send an API GET request to /v1/beers.json?callback=onBeersLoad
     Then I should receive a 200 response
     And I should see the following JSONP response with an "onBeersLoad" callback:
@@ -90,7 +90,7 @@ Feature: List beers
         }
       """
 
-  Scenario: Listing beers, with pagination
+  Scenario: Listing beers with pagination
     When I send an API GET request to /v1/beers.json?page=2&per_page=1
     Then I should receive a 200 response
     And I should see the following JSON response:
@@ -114,7 +114,7 @@ Feature: List beers
         }
       """
 
-  Scenario: Listing beers, with entries from an API client using a public token
+  Scenario: Listing beers with entries from an API client using a public token
     When I send an API GET request to /v1/beers.json?token=a1b2c3
     Then I should receive a 200 response
     And I should see the following JSON response:
@@ -160,7 +160,7 @@ Feature: List beers
         }
       """
 
-  Scenario: Listing beers, with entries from an API client using a private token
+  Scenario: Listing beers with entries from an API client using a private token
     When I send an API GET request to /v1/beers.json?token=x1y2z3
     Then I should receive a 200 response
     And I should see the following JSON response:
@@ -206,7 +206,7 @@ Feature: List beers
         }
       """
 
-  Scenario: Listing beers, with custom sorting
+  Scenario: Listing beers with custom sorting
     When I send an API GET request to /v1/beers.json?order=updated_at%20desc
     Then I should receive a 200 response
     And I should see the following JSON response:
@@ -241,6 +241,6 @@ Feature: List beers
         }
       """
 
-  Scenario: Listing beers, in an invalid format
+  Scenario: Listing beers in an invalid format
     When I send an API GET request to /v1/beers.xml
     Then I should receive a 406 response

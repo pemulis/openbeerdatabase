@@ -40,7 +40,7 @@ Feature: List breweries
         }
       """
 
-  Scenario: Listing breweries, with JSONP
+  Scenario: Listing breweries with JSONP
     When I send an API GET request to /v1/breweries.json?callback=onBreweries
     Then I should receive a 200 response
     And I should see the following JSONP response with an "onBreweries" callback:
@@ -65,7 +65,7 @@ Feature: List breweries
         }
       """
 
-  Scenario: Listing breweries, with pagination
+  Scenario: Listing breweries with pagination
     When I send an API GET request to /v1/breweries.json?page=2&per_page=1
     Then I should receive a 200 response
     And I should see the following JSON response:
@@ -84,7 +84,7 @@ Feature: List breweries
         }
       """
 
-  Scenario: Listing breweries, with entries from an API client using a public token
+  Scenario: Listing breweries with entries from an API client using a public token
     When I send an API GET request to /v1/breweries.json?token=a1b2c3
     Then I should receive a 200 response
     And I should see the following JSON response:
@@ -115,7 +115,7 @@ Feature: List breweries
         }
       """
 
-  Scenario: Listing breweries, with entries from an API client using a private token
+  Scenario: Listing breweries with entries from an API client using a private token
     When I send an API GET request to /v1/breweries.json?token=x1y2z3
     Then I should receive a 200 response
     And I should see the following JSON response:
@@ -146,7 +146,7 @@ Feature: List breweries
         }
       """
 
-  Scenario: Listing breweries, with custom sorting
+  Scenario: Listing breweries with custom sorting
     When I send an API GET request to /v1/breweries.json?order=updated_at%20desc
     Then I should receive a 200 response
     And I should see the following JSON response:
@@ -171,6 +171,6 @@ Feature: List breweries
         }
       """
 
-  Scenario: Listing breweries, in an invalid format
+  Scenario: Listing breweries in an invalid format
     When I send an API GET request to /v1/breweries.xml
     Then I should receive a 406 response

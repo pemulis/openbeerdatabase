@@ -51,7 +51,7 @@ Feature: Create a brewery
     Then I should receive a 401 response
     And the API user with the public token "a1b2c3" should have 0 breweries
 
-  Scenario: Creating a brewery, with validation errors
+  Scenario: Creating a brewery with validation errors
     When I create the following brewery via the API using the "x1y2z3" token:
       | name | url |
       |      | WTF |

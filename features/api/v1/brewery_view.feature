@@ -4,7 +4,7 @@ Feature: View a brewery
   As an API client
   I want to be able to view a brewery
 
-  Scenario: Viewing a global brewery
+  Scenario: Viewing a brewery
     Given the following brewery exists:
       | id | name  | url              | created_at | updated_at |
       | 1  | Abita | http://abita.com | 2010-01-01 | 2010-02-02 |
@@ -20,7 +20,7 @@ Feature: View a brewery
         }
       """
 
-  Scenario: Viewing a brewery, with JSONP
+  Scenario: Viewing a brewery with JSONP
     Given the following brewery exists:
       | id | name  | url              | created_at | updated_at |
       | 1  | Abita | http://abita.com | 2010-01-01 | 2010-02-02 |
@@ -68,18 +68,18 @@ Feature: View a brewery
         }
       """
 
-  Scenario: Viewing a brewery, not owned by the requesting API client
+  Scenario: Viewing a brewery not owned by the requesting API client
     Given the following brewery exists:
       | id | user                 |
       | 1  | public_token: a1b2c3 |
     When I send an API GET request to /v1/breweries/1.json?token=d4e5f6
     Then I should receive a 401 response
 
-  Scenario: Viewing a brewery, that does not exist
+  Scenario: Viewing a brewery that does not exist
     When I send an API GET request to /v1/breweries/1.json
     Then I should receive a 404 response
 
-  Scenario: Viewing a brewery, in an invalid format
+  Scenario: Viewing a brewery in an invalid format
     Given the following brewery exists:
       | id |
       | 1  |

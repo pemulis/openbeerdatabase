@@ -1,7 +1,7 @@
 class Beer < ActiveRecord::Base
-  include CustomPagination
-
   SORTABLE_COLUMNS = %w(id name created_at updated_at).freeze
+
+  include CustomPagination
 
   belongs_to :brewery
   belongs_to :user

@@ -39,9 +39,7 @@
 
 <section class="container">
   <section>
-    <% if controller_name == "documentation" -%>
-      <p class="warning">The API is currently a work-in-progress and is subject to change without notice.</p>
-    <% elsif flash[:alert].present? %>
+    <% if flash[:alert].present? %>
       <p class="alert"><%= flash[:alert] %></p>
     <% end -%>
 

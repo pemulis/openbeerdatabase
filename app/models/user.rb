@@ -27,6 +27,10 @@ class User < ActiveRecord::Base
     where(["public_token = :token OR private_token = :token", :token => token]).first
   end
 
+  def can_access?(record)
+    record.respond_to?(:user) && record.user == self
+  end
+
   def password
     if hashed_password
       @password ||= BCrypt::Password.new(hashed_password)

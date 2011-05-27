@@ -7,7 +7,7 @@ class Api::V1::BreweriesController < Api::V1::BaseController
     @brewery = Brewery.find(params[:id])
 
     if params[:token].present?
-      head(:unauthorized) unless @brewery.user == current_user
+      head(:unauthorized) unless authorized_for?(@brewery)
     end
   end
 
@@ -25,7 +25,7 @@ class Api::V1::BreweriesController < Api::V1::BaseController
   def destroy
     brewery = Brewery.find(params[:id])
 
-    if brewery.user == current_user
+    if authorized_for?(brewery)
       if brewery.destroy
         head :ok
       else

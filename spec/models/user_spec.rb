@@ -111,3 +111,22 @@ describe User, ".find_by_public_or_private_token" do
     User.find_by_public_or_private_token(user.private_token).should == user
   end
 end
+
+describe User, "#can_access?" do
+  subject { Factory(:user) }
+
+  let(:user_beer)  { Factory(:beer, :user => subject) }
+  let(:other_beer) { Factory(:beer) }
+
+  it "returns true when the record is owned by the user" do
+    subject.can_access?(user_beer).should == true
+  end
+
+  it "returns false when the record is not owned by the user" do
+    subject.can_access?(other_beer).should == false
+  end
+
+  it "returns false when record does not respond to user" do
+    subject.can_access?({}).should == false
+  end
+end

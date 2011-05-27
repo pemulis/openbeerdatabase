@@ -12,6 +12,10 @@ class Api::V1::BaseController < ApplicationController
     head :unauthorized
   end
 
+  def authorized_for?(record)
+    signed_in? && current_user.can_access?(record)
+  end
+
   def validate_format
     head(:not_acceptable) unless request.format.json?
   end

@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   before_save       :clean_attributes, :hash_password
   before_validation :generate_tokens, :on => :create
 
-  attr_accessor :password
+  attr_writer :password
 
   def self.authenticate(email, password)
     user = where(:email => email).first

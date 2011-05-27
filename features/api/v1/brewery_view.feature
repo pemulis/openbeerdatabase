@@ -68,6 +68,25 @@ Feature: View a brewery
         }
       """
 
+  Scenario: Viewing a brewery not owned by the requesting API client as an administrator
+    Given the following brewery exists:
+      | id | user                  | name  | url              | created_at | updated_at |
+      | 1  | private_token: x1y2z3 | Abita | http://abita.com | 2010-01-01 | 2010-02-02 |
+    And the following user exists:
+      | private_token | administrator |
+      | e1f2g3        | true          |
+    When I send an API GET request to /v1/breweries/1.json?token=e1f2g3
+    Then I should receive a 200 response
+    And I should see the following JSON response:
+      """
+        { "id"         : 1,
+          "name"       : "Abita",
+          "url"        : "http://abita.com",
+          "created_at" : "2010-01-01T00:00:00Z",
+          "updated_at" : "2010-02-02T00:00:00Z"
+        }
+      """
+
   Scenario: Viewing a brewery not owned by the requesting API client
     Given the following brewery exists:
       | id | user                 |

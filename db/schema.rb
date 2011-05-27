@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110517160832) do
+ActiveRecord::Schema.define(:version => 20110527023948) do
 
   create_table "beers", :force => true do |t|
     t.integer  "user_id"
@@ -37,11 +37,12 @@ ActiveRecord::Schema.define(:version => 20110517160832) do
   create_table "users", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "public_token",    :limit => 64,  :null => false
-    t.string   "private_token",   :limit => 64,  :null => false
-    t.string   "name",            :limit => 64,  :null => false
-    t.string   "email",                          :null => false
-    t.string   "hashed_password", :limit => 128, :null => false
+    t.string   "public_token",    :limit => 64,                     :null => false
+    t.string   "private_token",   :limit => 64,                     :null => false
+    t.string   "name",            :limit => 64,                     :null => false
+    t.string   "email",                                             :null => false
+    t.string   "hashed_password", :limit => 128,                    :null => false
+    t.boolean  "administrator",                  :default => false, :null => false
   end
 
   add_index "users", ["private_token"], :name => "index_users_on_private_token", :unique => true

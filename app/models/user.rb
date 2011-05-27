@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   validates :public_token,  :presence => true
   validates :private_token, :presence => true
 
-  attr_protected :public_token, :private_token
+  attr_protected :public_token, :private_token, :administrator
 
   before_save       :clean_attributes, :hash_password
   before_validation :generate_tokens, :on => :create
@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def can_access?(record)
-    record.respond_to?(:user) && record.user == self
+    record.respond_to?(:user) && (administrator? || record.user == self)
   end
 
   def password

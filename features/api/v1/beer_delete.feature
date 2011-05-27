@@ -25,6 +25,17 @@ Feature: Delete a beer
     Then I should receive a 401 response
     And the API user with the public token "a1b2c3" should have 1 beer
 
+  Scenario: Deleting a beer not owned by the requesting API client as an administrator
+    Given the following beer exists:
+      | id | user                  |
+      | 1  | private_token: x1y2z3 |
+    And the following user exists:
+      | private_token | administrator |
+      | e1f2g3        | true          |
+    When I send an API DELETE request to /v1/beers/1?token=e1f2g3
+    Then I should receive a 200 response
+    And the API user with the private token "x1y2z3" should have 0 beers
+
   Scenario: Deleting a beer not owned by the requesting API client
     Given the following beer exists:
       | id | user                  |

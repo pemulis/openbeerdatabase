@@ -11,6 +11,8 @@ describe User do
 
   it { should validate_presence_of(:private_token) }
   it { should_not allow_mass_assignment_of(:private_token) }
+
+  it { should_not allow_mass_assignment_of(:administrator) }
 end
 
 describe User, "being created" do
@@ -120,6 +122,11 @@ describe User, "#can_access?" do
 
   it "returns true when the record is owned by the user" do
     subject.can_access?(user_beer).should == true
+  end
+
+  it "returns true when the record is not owned by the user but the user is an administrator" do
+    subject.administrator = true
+    subject.can_access?(other_beer).should == true
   end
 
   it "returns false when the record is not owned by the user" do

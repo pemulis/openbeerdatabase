@@ -82,6 +82,24 @@ describe User, "being updated" do
   end
 end
 
+describe User, ".authenticate" do
+  let(:user)     { Factory(:user) }
+  let(:email)    { user.email }
+  let(:password) { "test" }
+
+  it "returns a user when credentials are correct" do
+    User.authenticate(email, password).should == user
+  end
+
+  it "returns nil when e-mail is incorrect" do
+    User.authenticate("what@example.com", password).should be_nil
+  end
+
+  it "returns nil when password is incorrect" do
+    User.authenticate(email, "wrong").should be_nil
+  end
+end
+
 describe User, ".find_by_public_or_private_token" do
   let(:user) { Factory(:user) }
 

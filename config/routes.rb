@@ -13,6 +13,7 @@ OpenBeerDatabase::Application.routes.draw do
 
   constraints(lambda { |request| request.subdomain.blank? }) do
     resources :documentation, :only => [:show]
+    resource  :session,       :only => [:new, :create]
     resources :users,         :only => [:show, :new, :create]
 
     root :to => "Documentation#show", :id => "overview"

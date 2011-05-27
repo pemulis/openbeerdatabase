@@ -3,7 +3,7 @@ module Authentication
 
   def self.included(base)
     if base.respond_to?(:helper_method)
-      base.__send__(:helper_method, :current_user)
+      base.__send__(:helper_method, :current_user, :signed_in?)
     end
   end
 

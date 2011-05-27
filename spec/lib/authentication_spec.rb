@@ -9,7 +9,7 @@ describe Authentication, "class" do
 
   it "add helper methods to base when included" do
     Authentication.__send__(:included, subject)
-    subject.should have_received(:helper_method).with(:current_user)
+    subject.should have_received(:helper_method).with(:current_user, :signed_in?)
   end
 end
 

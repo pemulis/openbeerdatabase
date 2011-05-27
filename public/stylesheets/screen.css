@@ -77,9 +77,9 @@ body > header h2 {
   font: normal 12px/1 "Helvetica Neue Light", HelveticaNeue-Light, Helvetica, Arial, Sans-serif;
 }
 
-#request-token a {
+#sign-up a {
   position: absolute;
-  top: 14px;
+  top: 8px;
   right: 4px;
   background: #6EAE3C;
   background: -moz-linear-gradient(0% 100% 90deg, #6EAE3C 0%, #6EAE3C 50%, #53961F 50%, #53961F 100%);
@@ -97,13 +97,13 @@ body > header h2 {
   -webkit-border-radius: 6px;
 }
 
-#request-token a:hover {
+#sign-up a:hover {
   background: #7EBE4C;
   background: -moz-linear-gradient(0% 100% 90deg, #F15587 0%, #F15587 50%, #F26895 50%, #F26895 100%);
   background: -webkit-gradient(linear, 0% 50%, 0% 51%, from(#7EBE4C), to(#63A62F));
 }
 
-#request-token a:before {
+#sign-up a:before {
   position: absolute;
   top: 6px;
   left: 12px;
@@ -112,6 +112,36 @@ body > header h2 {
   font-size: 32px;
   font-family: "IconicStroke";
   content: "k";
+}
+
+#sign-in {
+  position: absolute;
+  top: 50px;
+  right: 4px;
+  width: 247px;
+  font: normal 11px/1 "Helvetica Neue Light", HelveticaNeue-Light, Helvetica, Arial, Sans-serif;
+  text-align: center;
+}
+
+#sign-in a,
+#current-user a {
+  background: transparent;
+  color: #432;
+  border-bottom: 1px solid #432;
+}
+
+#sign-in a:hover,
+#current-user a:hover {
+  color: #000;
+  border-color: #000;
+  text-decoration: none;
+}
+
+#current-user {
+  position: absolute;
+  top: 25px;
+  right: 4px;
+  font: normal 12px/1 "Helvetica Neue Light", HelveticaNeue-Light, Helvetica, Arial, Sans-serif;
 }
 
 
@@ -198,12 +228,19 @@ section p.error {
   overflow: hidden;
 }
 
+section p.alert,
 section p.warning {
   position: relative;
   background: #FFF2AF;
   color: #222;
   padding: 10px 10px 10px 34px;
   border: 1px solid #EEB;
+}
+
+section p.alert {
+   background: #FAA;
+   color: #000;
+   border-color: #F66;
 }
 
 section a {
@@ -215,6 +252,7 @@ section a:hover span {
   text-decoration: underline;
 }
 
+section p.alert:before,
 section p.warning:before {
   position: absolute;
   top: 5px;
@@ -223,6 +261,12 @@ section p.warning:before {
   font-size: 24px;
   font-family: "IconicStroke";
   content: "s";
+}
+
+section p.alert:before {
+  top: 6px;
+  color: #000;
+  content: "x";
 }
 
 section aside {

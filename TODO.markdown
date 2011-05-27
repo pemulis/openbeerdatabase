@@ -9,7 +9,6 @@
 
 ## Website
 
-* Add sign in for users.
 * Add a better homepage.
 * Add a Terms of Serivce.
 * Add a license to the database.

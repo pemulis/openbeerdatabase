@@ -1,0 +1,21 @@
+<header>
+  <h1>Sign In</h1>
+</header>
+
+<p>Access to account information in case you forgot it while &#8220;testing.&#8221;</p>
+
+<%= form_for(:user, :url => session_path) do |form| %>
+  <label for="email">E-mail:</label>
+
+  <div>
+    <input type="text" name="email" id="email">
+  </div>
+
+  <label for="password">Password:</label>
+
+  <div>
+    <input type="password" name="password" id="password">
+  </div>
+
+  <button type="submit">Sign In</button>
+<% end %>

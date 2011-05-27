@@ -18,8 +18,21 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
 
+  def self.authenticate(email, password)
+    user = where(:email => email).first
+    user if user.present? && user.password == password
+  end
+
   def self.find_by_public_or_private_token(token)
     where(["public_token = :token OR private_token = :token", :token => token]).first
+  end
+
+  def password
+    if hashed_password
+      @password ||= BCrypt::Password.new(hashed_password)
+    else
+      @password
+    end
   end
 
   protected

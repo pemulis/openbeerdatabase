@@ -9,6 +9,7 @@ module OpenBeerDatabase
     config.encoding  = "utf-8"
     config.time_zone = "UTC"
     config.middleware.use Rack::JSONP
+    config.filter_parameters += [:password, :password_confirmation]
   end
 end
 

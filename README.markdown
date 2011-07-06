@@ -14,6 +14,10 @@ A free, public database and API for beer information.
    rake db:create db:migrate
    </pre>
 
+## Bug Reports & Feature Requests
+
+Please use [GitHub Issues](https://github.com/tristandunn/openbeerdatabase/issues) to report bugs or request features.
+
 ## Contributing
 
 1. Fork the project.

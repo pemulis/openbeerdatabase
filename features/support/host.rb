@@ -1,3 +1,3 @@
 Before do
-  Capybara.default_host = "example.com"
+  Capybara.default_host = "http://example.com"
 end

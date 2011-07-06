@@ -32,14 +32,14 @@ end
 Then /^I should see the following JSON response:$/ do |expected_json|
   require "json"
   expected = JSON.pretty_generate(JSON.parse(expected_json))
-  actual   = JSON.pretty_generate(JSON.parse(page.body))
+  actual   = JSON.pretty_generate(JSON.parse(page.text))
   expected.should == actual
 end
 
 Then /^I should see the following JSONP response with an? "([^"]*)" callback:$/ do |callback, expected_json|
   require "json"
   expected = JSON.pretty_generate(JSON.parse(expected_json))
-  actual   = JSON.pretty_generate(JSON.parse(page.body.match(/^#{callback}\((.+)\)$/)[1]))
+  actual   = JSON.pretty_generate(JSON.parse(page.text.match(/^#{callback}\((.+)\)$/)[1]))
   expected.should == actual
 end
 

@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_many :beers
   has_many :breweries
 
-  validates :name, :presence => true
+  validates :name,  :presence   => true
   validates :email, :presence   => true,
                     :uniqueness => { :case_sensitive => false },
                     :format     => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_public_or_private_token(token)
-    where(["public_token = :token OR private_token = :token", :token => token]).first
+    where("public_token = :token OR private_token = :token", :token => token).first
   end
 
   def can_access?(record)

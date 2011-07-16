@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   def self.authenticate(email, password)
     user = where(:email => email).first
-    user if user.present? && user.password == password
+    user if user.try(:password) == password
   end
 
   def self.find_by_public_or_private_token(token)

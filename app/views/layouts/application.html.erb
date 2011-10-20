@@ -5,7 +5,7 @@
 
   <title>Open Beer Database</title>
 
-  <link rel="stylesheet" type="text/css" href="<%= compute_public_path("screen", "stylesheets", "css") %>" media="screen">
+  <%= stylesheet_link_tag "application" %>
 
   <% unless %w(development test).include?(Rails.env) -%>
   <script>

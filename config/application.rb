@@ -46,6 +46,10 @@ module OpenBeerDatabase
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = "1.0"
 
+    # Use YUI Compressor to compress the CSS.
+    config.assets.css_compressor = :yui
+
+    # Use the Rack JSONP middleware to make serving JSONP easy.
     config.middleware.use Rack::JSONP
   end
 end

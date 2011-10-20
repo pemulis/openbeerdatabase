@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
 
       redirect_to user
     else
-      redirect_to new_session_url, :alert => "E-mail or password is incorrect. Please try again."
+      redirect_to new_session_url, alert: "E-mail or password is incorrect. Please try again."
     end
   end
 end

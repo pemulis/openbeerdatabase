@@ -5,7 +5,7 @@ class Example
 end
 
 describe Authentication, "class" do
-  subject { stub("Base", :helper_method => true) }
+  subject { stub("Base", helper_method: true) }
 
   it "add helper methods to base when included" do
     Authentication.__send__(:included, subject)
@@ -18,7 +18,7 @@ describe Authentication, "#access_denied" do
 
   before do
     subject.stubs(:redirect_to)
-    subject.stubs(:root_url => "/")
+    subject.stubs(root_url: "/")
   end
 
   it "redirects to root_url" do
@@ -37,7 +37,7 @@ describe Authentication, "#authenticate" do
 
   describe "when signed in" do
     before do
-      subject.stubs(:signed_in? => true)
+      subject.stubs(signed_in?: true)
     end
 
     it "does not call access_denied" do
@@ -48,7 +48,7 @@ describe Authentication, "#authenticate" do
 
   describe "when not signed in" do
     before do
-      subject.stubs(:signed_in? => false)
+      subject.stubs(signed_in?: false)
     end
 
     it "calls access_denied" do
@@ -92,7 +92,7 @@ describe Authentication, "#current_user" do
       let(:user) { Factory.stub(:user) }
 
       before do
-        subject.stubs(:user_from_session => user)
+        subject.stubs(user_from_session: user)
       end
 
       it "assigns the user to the instance variable" do
@@ -105,7 +105,7 @@ describe Authentication, "#current_user" do
       let(:user) { Factory.stub(:user) }
 
       before do
-        subject.stubs(:user_from_token => user)
+        subject.stubs(user_from_token: user)
       end
 
       it "assigns the user to the instance variable" do
@@ -129,7 +129,7 @@ describe Authentication, "#current_user=" do
   let(:session) { {} }
 
   before do
-    subject.stubs(:session => session)
+    subject.stubs(session: session)
   end
 
   describe "when assigned a user" do
@@ -167,12 +167,12 @@ describe Authentication, "#signed_in?" do
   subject { Example.new }
 
   it "returns true when a user is present" do
-    subject.stubs(:current_user => true)
+    subject.stubs(current_user: true)
     subject.__send__(:signed_in?).should be_true
   end
 
   it "returns false when no user is present" do
-    subject.stubs(:current_user => :false)
+    subject.stubs(current_user: :false)
     subject.__send__(:signed_in?).should be_false
   end
 end
@@ -184,10 +184,10 @@ describe Authentication, "#user_from_session" do
   let(:session) { {} }
 
   before do
-    subject.stubs(:session => session)
+    subject.stubs(session: session)
     subject.stubs(:current_user=)
 
-    User.stubs(:find => user)
+    User.stubs(find: user)
   end
 
   describe "when a user is defined in the session" do
@@ -228,8 +228,8 @@ describe Authentication, "#user_from_token" do
   let(:request) { stub }
 
   before do
-    subject.stubs(:params => params)
-    subject.stubs(:request => request)
+    subject.stubs(params: params)
+    subject.stubs(request: request)
 
     User.stubs(:find_by_public_or_private_token)
     User.stubs(:find_by_private_token)
@@ -250,9 +250,9 @@ describe Authentication, "#user_from_token" do
   describe "when a token is defined in the request parameters for a GET request" do
     before do
       params[:token] = token
-      request.stubs(:get? => true)
+      request.stubs(get?: true)
 
-      User.stubs(:find_by_public_or_private_token => user)
+      User.stubs(find_by_public_or_private_token: user)
     end
 
     it "attempts to find the user by token" do
@@ -269,9 +269,9 @@ describe Authentication, "#user_from_token" do
   describe "when a token is defined in the request parameters for a non-GET request" do
     before do
       params[:token] = token
-      request.stubs(:get? => false)
+      request.stubs(get?: false)
 
-      User.stubs(:find_by_private_token => user)
+      User.stubs(find_by_private_token: user)
     end
 
     it "attempts to find the user by token" do

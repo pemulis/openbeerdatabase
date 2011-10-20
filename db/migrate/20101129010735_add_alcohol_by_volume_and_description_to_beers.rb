@@ -1,8 +1,8 @@
 class AddAlcoholByVolumeAndDescriptionToBeers < ActiveRecord::Migration
   def self.up
     change_table :beers do |t|
-      t.float :abv,         :null => false
-      t.text  :description, :null => false
+      t.float :abv,         null: false
+      t.text  :description, null: false
     end
   end
 

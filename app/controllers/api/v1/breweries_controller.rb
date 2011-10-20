@@ -15,10 +15,10 @@ class Api::V1::BreweriesController < Api::V1::BaseController
     brewery = current_user.breweries.build(params[:brewery])
 
     if brewery.save
-      head :created, :location => v1_brewery_url(brewery, :format => :json)
+      head :created, location: v1_brewery_url(brewery, format: :json)
     else
-      render :json   => { :errors => brewery.errors },
-             :status => :bad_request
+      render json:   { errors: brewery.errors },
+             status: :bad_request
     end
   end
 

@@ -6,10 +6,10 @@ class Beer < ActiveRecord::Base
   belongs_to :brewery
   belongs_to :user
 
-  validates :brewery_id,  :presence => true
-  validates :name,        :presence => true, :length => { :maximum => 255 }
-  validates :description, :presence => true, :length => { :maximum => 4096 }
-  validates :abv,         :presence => true, :numericality => true
+  validates :brewery_id,  presence: true
+  validates :name,        presence: true, length: { maximum: 255 }
+  validates :description, presence: true, length: { maximum: 4096 }
+  validates :abv,         presence: true, numericality: true
 
   attr_accessible :name, :description, :abv
 

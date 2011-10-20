@@ -9,7 +9,7 @@ class ChangeBrewerToBrewery < ActiveRecord::Migration
 
     change_table :beers do |t|
       t.remove :brewer_id
-      t.change :brewery_id, :integer, :null => false
+      t.change :brewery_id, :integer, null: false
     end
   end
 
@@ -23,7 +23,7 @@ class ChangeBrewerToBrewery < ActiveRecord::Migration
 
     change_table :beers do |t|
       t.remove :brewery_id
-      t.change :brewer_id, :integer, :null => false
+      t.change :brewer_id, :integer, null: false
     end
   end
 end

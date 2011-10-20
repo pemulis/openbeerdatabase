@@ -17,37 +17,37 @@ end
 
 describe User, "being created" do
   it "requires a name" do
-    Factory.build(:user, :name => nil).should_not be_valid
+    Factory.build(:user, name: nil).should_not be_valid
   end
 
   it "requires an e-mail" do
-    Factory.build(:user, :email => nil).should_not be_valid
+    Factory.build(:user, email: nil).should_not be_valid
   end
 
   it "requires a valid e-mail" do
-    Factory.build(:user, :email => "@.com").should_not be_valid
+    Factory.build(:user, email: "@.com").should_not be_valid
   end
 
   it "requires a unique e-mail" do
     user = Factory(:user)
 
-    Factory.build(:user, :email => user.email.upcase).should_not be_valid
+    Factory.build(:user, email: user.email.upcase).should_not be_valid
   end
 
   it "requires a password" do
-    Factory.build(:user, :password => nil).should_not be_valid
+    Factory.build(:user, password: nil).should_not be_valid
   end
 
   it "requires a password confirmation" do
-    Factory.build(:user, :password_confirmation => nil).should_not be_valid
+    Factory.build(:user, password_confirmation: nil).should_not be_valid
   end
 
   it "requires password to match confirmation" do
-    Factory.build(:user, :password => "nope").should_not be_valid
+    Factory.build(:user, password: "nope").should_not be_valid
   end
 
   it "downcases e-mail" do
-    Factory(:user, :email => "SoMe@GuY.com").email.should == "some@guy.com"
+    Factory(:user, email: "SoMe@GuY.com").email.should == "some@guy.com"
   end
 
   it "generates a public API token" do
@@ -117,7 +117,7 @@ end
 describe User, "#can_access?" do
   subject { Factory(:user) }
 
-  let(:user_beer)  { Factory(:beer, :user => subject) }
+  let(:user_beer)  { Factory(:beer, user: subject) }
   let(:other_beer) { Factory(:beer) }
 
   it "returns true when the record is owned by the user" do

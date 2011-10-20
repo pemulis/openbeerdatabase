@@ -1,7 +1,7 @@
 class AddBrewerAssociationToBeer < ActiveRecord::Migration
   def self.up
     change_table :beers do |t|
-      t.integer :brewer_id, :null => false
+      t.integer :brewer_id, null: false
     end
   end
 

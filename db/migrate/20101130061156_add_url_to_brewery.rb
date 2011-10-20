@@ -1,7 +1,7 @@
 class AddUrlToBrewery < ActiveRecord::Migration
   def self.up
     change_table :breweries do |t|
-      t.string :url, :null => true
+      t.string :url, null: true
     end
   end
 

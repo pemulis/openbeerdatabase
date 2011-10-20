@@ -1,7 +1,7 @@
 class AddAdministratorToUsers < ActiveRecord::Migration
   def self.up
     change_table :users do |t|
-      t.boolean :administrator, :default => false, :null => false
+      t.boolean :administrator, default: false, null: false
     end
   end
 

@@ -51,8 +51,8 @@ When /^I create the following beers? via the API for the "([^"]*)" brewery using
 
   table.hashes.each do |hash|
     When %{I send an API POST request to /v1/beers.json?token=#{token}}, {
-      :brewery_id => brewery.id,
-      :beer       => hash
+      brewery_id: brewery.id,
+      beer:       hash
     }.to_json
   end
 end
@@ -62,6 +62,6 @@ end
 
 When /^I create the following (?:brewery|breweries) via the API using the "([^"]*)" token:$/ do |token, table|
   table.hashes.each do |hash|
-    When %{I send an API POST request to /v1/breweries.json?token=#{token}}, { :brewery => hash }.to_json
+    When %{I send an API POST request to /v1/breweries.json?token=#{token}}, { brewery: hash }.to_json
   end
 end

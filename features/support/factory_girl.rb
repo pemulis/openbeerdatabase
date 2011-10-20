@@ -17,7 +17,7 @@ FactoryGirl.factories.each do |factory|
         end
       end
 
-      model.first(:conditions => attributes).should_not be_nil
+      model.first(conditions: attributes).should_not be_nil
     end
   end
 end

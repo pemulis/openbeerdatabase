@@ -11,10 +11,10 @@ module CustomPagination
     end
 
     def self.options_for_pagination(options)
-      { :page       => options[:page]     || 1,
-        :per_page   => options[:per_page] || 50,
-        :conditions => conditions_for_pagination(options),
-        :order      => order_for_pagination(options[:order])
+      { page:       options[:page]     || 1,
+        per_page:   options[:per_page] || 50,
+        conditions: conditions_for_pagination(options),
+        order:      order_for_pagination(options[:order])
       }
     end
 

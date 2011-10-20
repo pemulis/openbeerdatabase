@@ -1,19 +1,25 @@
-Factory.define :beer do |beer|
-  beer.association(:brewery)
-  beer.association(:user)
-  beer.name        { "Strawberry Harvest" }
-  beer.description { "Strawberry Harvest Lager is a wheat beer made with real Louisiana strawberries." }
-  beer.abv         { 4.2 }
-end
+FactoryGirl.define do
+  factory :beer do
+    association :brewery
+    association :user
+    name        "Strawberry Harvest"
+    description "Strawberry Harvest Lager is a wheat beer made with real Louisiana strawberries."
+    abv         4.2
+  end
 
-Factory.define :brewery do |brewery|
-  brewery.association(:user)
-  brewery.name { "Abita" }
-end
+  factory :brewery do
+    association :user
+    name        "Abita"
+  end
 
-Factory.define :user do |user|
-  user.name                  { "Sue" }
-  user.sequence(:email)      { |n| "user#{n}@example.com" }
-  user.password              { "test" }
-  user.password_confirmation { "test" }
+  factory :user do
+    name                  "Sue"
+    email
+    password              "test"
+    password_confirmation "test"
+  end
+
+  sequence :email do |n|
+    "user#{n}@example.com"
+  end
 end

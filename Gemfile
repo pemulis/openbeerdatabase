@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 gem "bcrypt-ruby",      "3.0.1", :require => "bcrypt"
-gem "hoptoad_notifier", "2.4.11"
+gem "airbrake",         "3.0.4"
 gem "pg",               "0.11.0"
 gem "rails",            "3.1.1"
 gem "rack-contrib",     "1.1.0", :require => "rack/contrib"

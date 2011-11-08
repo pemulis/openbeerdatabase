@@ -98,7 +98,7 @@ describe User, ".authenticate" do
   end
 
   it "returns nil when password is incorrect" do
-    User.authenticate(email, "wrong").should be_nil
+    User.authenticate(email, "wrong").should be_false
   end
 end
 

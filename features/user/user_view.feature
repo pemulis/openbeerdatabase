@@ -5,14 +5,13 @@ Feature: Viewing a user
   I want to be able to view my account
 
   Background:
-    Given I am signed in as "Bob"
+    Given I sign up as "Bob"
 
   Scenario: Viewing the current user
     When I go to the account page for "Bob"
-    Then I should be on the account page for "Bob"
-    And I should see the API tokens for the "Bob" account
+    Then I should see the API tokens for the "Bob" account
 
   Scenario: Viewing another user
     Given a user exists with a name of "Sue"
     When I go to the account page for "Sue"
-    Then I should be on the homepage
+    Then I should not see the API tokens for the "Sue" account

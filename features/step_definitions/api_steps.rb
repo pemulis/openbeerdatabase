@@ -22,11 +22,16 @@ Then /^I should receive a (\d+) response$/ do |status|
 end
 
 Then /^the Location header should be set to (.+)$/ do |page_name|
-  previous_host = host.dup
+  location = case page_name
+             when /^the API beer page for "([^"]+)"$/
+               beer = Beer.find_by_name!($1)
+               v1_beer_url(beer, format: :json, host: API_HOST)
+             when /^the API brewery page for "([^"]+)"$/
+               brewery = Brewery.find_by_name!($1)
+               v1_brewery_url(brewery, format: :json, host: API_HOST)
+             end
 
-  host! API_HOST
-  page.response_headers["Location"].should == path_to(page_name)
-  host! previous_host
+  page.response_headers["Location"].should == location
 end
 
 Then /^I should see the following JSON response:$/ do |expected_json|

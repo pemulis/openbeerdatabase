@@ -1,11 +1,15 @@
-Given /^I am signed in as "([^"]+)"$/ do |name|
-  steps %{
-    Given I am on the homepage
-    And I follow "Sign up for an API token."
-    And I fill in "Name" with "#{name}"
-    And I fill in "E-mail" with "#{name.underscore}@example.com"
-    And I fill in "Password" with "test"
-    And I fill in "Password Confirmation" with "test"
-    And I press "Sign Up"
-  }
+When /^I sign in with "([^"]*)" and "([^"]*)"$/ do |email, password|
+  visit        root_path
+  click_link   "Sign in"
+  fill_in      "E-mail",   with: email
+  fill_in      "Password", with: password
+  click_button "Sign In"
+end
+
+Then /^I should be signed in as "([^"]+)"$/ do |name|
+  page.should have_content("Signed in as #{name}.")
+end
+
+Then /^I should be told my credentials are invalid$/ do
+  page.should have_content("E-mail or password is incorrect. Please try again.")
 end

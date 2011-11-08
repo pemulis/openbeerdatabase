@@ -19,11 +19,11 @@ unless ARGV.any? { |argument| argument =~ /^gems/ }
       end
 
       desc "Run all features"
-      task :all => [:ok, :wip]
+      task all: [:ok, :wip]
     end
 
-    task :cucumber => "cucumber:ok"
-    task :default  => :cucumber
+    task cucumber: "cucumber:ok"
+    task default:  :cucumber
   rescue LoadError
     desc "cucumber rake task not available (cucumber not installed)"
     task :cucumber do

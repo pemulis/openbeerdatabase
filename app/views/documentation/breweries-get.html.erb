@@ -38,6 +38,11 @@
       <td>The number of results per page. <span>Defaults to &#8220;50&#8221;.</span></td>
     </tr>
     <tr>
+      <td>query</td>
+      <td>string</td>
+      <td>The string to search with. <span>Case-insensitive and must be at least two characters. Automatically wrapped in wildcards, so a query of &#8220;bit&#8221; will find &#8220;Abita&#8221;.</span></td>
+    </tr>
+    <tr>
       <td>token</td>
       <td>string</td>
       <td>Include breweries created by the API user with the specified token in the results. <span>Public or private.</span></td>
@@ -55,6 +60,10 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>400</td>
+      <td>Invalid query.</td>
+    </tr>
     <tr>
       <td>406</td>
       <td>Invalid format.</td>

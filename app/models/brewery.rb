@@ -20,12 +20,14 @@ class Brewery < ActiveRecord::Base
   def self.search(options = {})
     user  = User.find_by_public_or_private_token(options[:token]) if options[:token].present?
     order = clean_order(options[:order], columns: SORTABLE_COLUMNS)
+    query = options[:query].to_s.strip
 
-    scoped
-      .where(user_id: [nil, user.try(:id)].uniq)
-      .page(options[:page] || 1)
-      .per_page(options[:per_page] || 50)
-      .order(order)
+    search = scoped.where(user_id: [nil, user.try(:id)].uniq)
+                   .page(options[:page] || 1)
+                   .per_page(options[:per_page] || 50)
+                   .order(order)
+    search = search.where("name ILIKE ?", "%#{query}%") if query.present?
+    search
   end
 
   private

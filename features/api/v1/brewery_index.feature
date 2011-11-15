@@ -171,6 +171,29 @@ Feature: List breweries
         }
       """
 
+  Scenario: Listing breweries, with a search query
+    When I send an API GET request to /v1/breweries.json?query=sian
+    Then I should receive a 200 response
+    And I should see the following JSON response:
+      """
+        { "page"      : 1,
+          "pages"     : 1,
+          "total"     : 1,
+          "breweries" : [
+            { "id"         : 3,
+              "name"       : "Russian River",
+              "url"        : "http://russianriverbrewing.com",
+              "created_at" : "2010-05-05T00:00:00Z",
+              "updated_at" : "2010-06-06T00:00:00Z"
+            }
+          ]
+        }
+      """
+
+  Scenario: Listing breweries, with an invalid search query
+    When I send an API GET request to /v1/breweries.json?query=a
+    Then I should receive a 400 response
+
   Scenario: Listing breweries in an invalid format
     When I send an API GET request to /v1/breweries.xml
     Then I should receive a 406 response

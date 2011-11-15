@@ -67,9 +67,21 @@ describe Beer, ".search" do
   end
 
   it "orders the results" do
-    Beer.search order: "order"
+    Beer.search(order: "order")
     Beer.should have_received(:clean_order).with("order", columns: Beer::SORTABLE_COLUMNS)
     scope.should have_received(:order).with(order)
+  end
+
+  it "filters results by name, when a query is provided" do
+    Beer.search query: "  name  "
+    scope.should have_received(:where).twice
+    scope.should have_received(:where).with("name ILIKE ?", "%name%")
+  end
+
+  it "does not filter results by name, when no query is provided" do
+    Beer.search
+    scope.should have_received(:where).once
+    scope.should have_received(:where).with("name ILIKE ?", "%%").never
   end
 
   it "returns the scope" do

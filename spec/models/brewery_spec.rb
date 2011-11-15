@@ -53,9 +53,21 @@ describe Brewery, ".search" do
   end
 
   it "orders the results" do
-    Brewery.search order: "order"
+    Brewery.search(order: "order")
     Brewery.should have_received(:clean_order).with("order", columns: Brewery::SORTABLE_COLUMNS)
     scope.should have_received(:order).with(order)
+  end
+
+  it "filters results by name, when a query is provided" do
+    Brewery.search query: "  name  "
+    scope.should have_received(:where).twice
+    scope.should have_received(:where).with("name ILIKE ?", "%name%")
+  end
+
+  it "does not filter results by name, when no query is provided" do
+    Brewery.search
+    scope.should have_received(:where).once
+    scope.should have_received(:where).with("name ILIKE ?", "%%").never
   end
 
   it "returns the scope" do

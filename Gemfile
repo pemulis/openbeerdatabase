@@ -3,7 +3,7 @@ source "http://rubygems.org"
 gem "bcrypt-ruby",      "3.0.1", require: "bcrypt"
 gem "airbrake",         "3.0.4"
 gem "pg",               "0.11.0"
-gem "rails",            "3.1.2"
+gem "rails",            "3.1.3"
 gem "rack-contrib",     "1.1.0", require: "rack/contrib"
 gem "will_paginate",    "3.0.2"
 

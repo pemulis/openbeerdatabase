@@ -1,14 +1,18 @@
 class Api::V1::BeersController < Api::V1::BaseController
   def index
-    @beers = Beer.paginate(params)
+    beers = Beer.paginate(params)
+
+    render json: Api::V1::BeersPresenter.new(beers)
   end
 
   def show
-    @beer = Beer.find(params[:id])
+    beer = Beer.find(params[:id])
 
     if params[:token].present?
-      head(:unauthorized) unless authorized_for?(@beer)
+      return head(:unauthorized) unless authorized_for?(beer)
     end
+
+    render json: Api::V1::BeerPresenter.new(beer)
   end
 
   def create

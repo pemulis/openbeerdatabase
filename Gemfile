@@ -6,6 +6,7 @@ gem "pg",               "0.11.0"
 gem "rails",            "3.1.3"
 gem "rack-contrib",     "1.1.0", require: "rack/contrib"
 gem "will_paginate",    "3.0.2"
+gem "yajl-ruby",        "1.1.0", require: "yajl"
 
 group :assets do
   gem "yui-compressor", "0.9.6"

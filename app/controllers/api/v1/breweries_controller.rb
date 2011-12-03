@@ -1,6 +1,6 @@
 class Api::V1::BreweriesController < Api::V1::BaseController
   def index
-    breweries = Brewery.paginate(params)
+    breweries = Brewery.search(params)
 
     render json: Api::V1::BreweriesPresenter.new(breweries)
   end

@@ -12,6 +12,57 @@ describe Brewery do
   it { should allow_mass_assignment_of(:url) }
 end
 
+describe Brewery, ".search" do
+  let(:user)  { Factory(:user) }
+  let(:order) { "id asc" }
+  let(:scope) { stub }
+
+  before do
+    Brewery.stubs(scoped: scope, clean_order: order)
+    User.stubs(find_by_public_or_private_token: user)
+    scope.stubs page:     scope,
+                where:    scope,
+                order:    scope,
+                per_page: scope
+  end
+
+  it "includes public records, when no token is present" do
+    Brewery.search
+    User.should have_received(:find_by_public_or_private_token).never
+    scope.should have_received(:where).with(user_id: [nil])
+  end
+
+  it "includes public and private records, when token is present" do
+    Brewery.search(token: "token")
+    User.should have_received(:find_by_public_or_private_token).with("token")
+    scope.should have_received(:where).with(user_id: [nil, user.id])
+  end
+
+  it "limits the query to a specific page" do
+    Brewery.search
+    scope.should have_received(:page).with(1)
+    Brewery.search(page: 2)
+    scope.should have_received(:page).with(2)
+  end
+
+  it "limits the number of records per page" do
+    Brewery.search
+    scope.should have_received(:per_page).with(50)
+    Brewery.search(per_page: 1)
+    scope.should have_received(:per_page).with(1)
+  end
+
+  it "orders the results" do
+    Brewery.search order: "order"
+    Brewery.should have_received(:clean_order).with("order", columns: Brewery::SORTABLE_COLUMNS)
+    scope.should have_received(:order).with(order)
+  end
+
+  it "returns the scope" do
+    Brewery.search({}).should == scope
+  end
+end
+
 describe Brewery, "url" do
   it "allows valid URLs" do
     [ nil,
@@ -51,100 +102,6 @@ describe Brewery, "url" do
      "http://example.toolongtld"
     ].each do |url|
       Factory.build(:brewery, url: url).should_not be_valid
-    end
-  end
-end
-
-describe Brewery, ".paginate" do
-  let(:user) { Factory(:user) }
-
-  before do
-    Brewery.stubs(:paginate_without_options)
-  end
-
-  it "defaults to records with no users and the first page, with 50 per page" do
-    Brewery.paginate
-    Brewery.should have_received(:paginate_without_options).with(page:       1,
-                                                                 per_page:   50,
-                                                                 conditions: "user_id IS NULL",
-                                                                 order:      "id ASC")
-  end
-
-  it "allows overriding of pagination parameters" do
-    Brewery.paginate(page: 2, per_page: 10)
-    Brewery.should have_received(:paginate_without_options).with(page:       2,
-                                                                 per_page:   10,
-                                                                 conditions: "user_id IS NULL",
-                                                                 order:      "id ASC")
-  end
-
-  it "includes user specific records when provided with a public token" do
-    Brewery.paginate(token: user.public_token)
-    Brewery.should have_received(:paginate_without_options).with(page:       1,
-                                                                 per_page:   50,
-                                                                 conditions: ["user_id IS NULL OR user_id = ?", user.id],
-                                                                 order:      "id ASC")
-  end
-
-  it "includes user specific records when provided with a private token" do
-    Brewery.paginate(token: user.private_token)
-    Brewery.should have_received(:paginate_without_options).with(page:       1,
-                                                                 per_page:   50,
-                                                                 conditions: ["user_id IS NULL OR user_id = ?", user.id],
-                                                                 order:      "id ASC")
-  end
-end
-
-describe Brewery, ".paginate with custom sort column and direction" do
-  before do
-    Brewery.stubs(:paginate_without_options)
-  end
-
-  it "allows customization of both options at the same time" do
-    Brewery.paginate(order: "updated_at DESC")
-    Brewery.should have_received(:paginate_without_options).with(page:       1,
-                                                                 per_page:   50,
-                                                                 conditions: "user_id IS NULL",
-                                                                 order:      "updated_at DESC")
-  end
-
-  %w(id name created_at updated_at).each do |column|
-    it "allows #{column} as a custom sort column" do
-      Brewery.paginate(order: column)
-      Brewery.should have_received(:paginate_without_options).with(page:       1,
-                                                                   per_page:   50,
-                                                                   conditions: "user_id IS NULL",
-                                                                   order:      "#{column} ASC")
-    end
-  end
-
-  %w(user_id).each do |column|
-    it "does not allow #{column} as a custom sort column" do
-      Brewery.paginate(order: column)
-      Brewery.should have_received(:paginate_without_options).with(page:       1,
-                                                                   per_page:   50,
-                                                                   conditions: "user_id IS NULL",
-                                                                   order:      "id ASC")
-    end
-  end
-
-  %w(asc desc).each do |order|
-    it "allows #{order} as a custom sort direction" do
-      Brewery.paginate(order: "id #{order}")
-      Brewery.should have_received(:paginate_without_options).with(page:       1,
-                                                                   per_page:   50,
-                                                                   conditions: "user_id IS NULL",
-                                                                   order:      "id #{order.upcase}")
-    end
-  end
-
-  %w(brewery `breweries`.`id`).each do |order|
-    it "does not allow #{order} as a custom sort direction" do
-      Brewery.paginate(order: "id #{order}")
-      Brewery.should have_received(:paginate_without_options).with(page:       1,
-                                                                   per_page:   50,
-                                                                   conditions: "user_id IS NULL",
-                                                                   order:      "id ASC")
     end
   end
 end

@@ -20,96 +20,59 @@ describe Beer do
   it { should allow_mass_assignment_of(:abv) }
 end
 
-describe Beer, ".paginate" do
-  let(:user) { Factory(:user) }
+describe Beer, ".search" do
+  let(:user)  { Factory(:user) }
+  let(:order) { "id asc" }
+  let(:scope) { stub }
 
   before do
-    Beer.stubs(:paginate_without_options)
+    Beer.stubs(scoped: scope, clean_order: order)
+    User.stubs(find_by_public_or_private_token: user)
+    scope.stubs page:     scope,
+                where:    scope,
+                order:    scope,
+                includes: scope,
+                per_page: scope
   end
 
-  it "defaults to records with no users and the first page, with 50 per page" do
-    Beer.paginate
-    Beer.should have_received(:paginate_without_options).with(page:       1,
-                                                              per_page:   50,
-                                                              conditions: "beers.user_id IS NULL",
-                                                              order:      "id ASC")
+  it "includes the brewery assocation" do
+    Beer.search
+    scope.should have_received(:includes).with(:brewery)
   end
 
-  it "allows overriding of pagination parameters" do
-    Beer.paginate(page: 2, per_page: 10)
-    Beer.should have_received(:paginate_without_options).with(page:       2,
-                                                              per_page:   10,
-                                                              conditions: "beers.user_id IS NULL",
-                                                              order:      "id ASC")
+  it "includes public records, when no token is present" do
+    Beer.search
+    User.should have_received(:find_by_public_or_private_token).never
+    scope.should have_received(:where).with(user_id: [nil])
   end
 
-  it "includes user specific records when provided with a public token" do
-    Beer.paginate(token: user.public_token)
-    Beer.should have_received(:paginate_without_options).with(page:       1,
-                                                              per_page:   50,
-                                                              conditions: ["beers.user_id IS NULL OR beers.user_id = ?", user.id],
-                                                              order:      "id ASC")
+  it "includes public and private records, when token is present" do
+    Beer.search(token: "token")
+    User.should have_received(:find_by_public_or_private_token).with("token")
+    scope.should have_received(:where).with(user_id: [nil, user.id])
   end
 
-  it "includes user specific records when provided with a private_token" do
-    Beer.paginate(token: user.private_token)
-    Beer.should have_received(:paginate_without_options).with(page:       1,
-                                                              per_page:   50,
-                                                              conditions: ["beers.user_id IS NULL OR beers.user_id = ?", user.id],
-                                                              order:      "id ASC")
-  end
-end
-
-describe Beer, ".paginate with custom sort column and direction" do
-  before do
-    Beer.stubs(:paginate_without_options)
+  it "limits the query to a specific page" do
+    Beer.search
+    scope.should have_received(:page).with(1)
+    Beer.search(page: 2)
+    scope.should have_received(:page).with(2)
   end
 
-  it "allows customization of both options at the same time" do
-    Beer.paginate(order: "updated_at DESC")
-    Beer.should have_received(:paginate_without_options).with(page:       1,
-                                                              per_page:   50,
-                                                              conditions: "beers.user_id IS NULL",
-                                                              order:      "updated_at DESC")
+  it "limits the number of records per page" do
+    Beer.search
+    scope.should have_received(:per_page).with(50)
+    Beer.search(per_page: 1)
+    scope.should have_received(:per_page).with(1)
   end
 
-  %w(id name created_at updated_at).each do |column|
-    it "allows #{column} as a custom sort column" do
-      Beer.paginate(order: column)
-      Beer.should have_received(:paginate_without_options).with(page:       1,
-                                                                per_page:   50,
-                                                                conditions: "beers.user_id IS NULL",
-                                                                order:      "#{column} ASC")
-    end
+  it "orders the results" do
+    Beer.search order: "order"
+    Beer.should have_received(:clean_order).with("order", columns: Beer::SORTABLE_COLUMNS)
+    scope.should have_received(:order).with(order)
   end
 
-  %w(brewery_id user_id description abv).each do |column|
-    it "does not allow #{column} as a custom sort column" do
-      Beer.paginate(order: column)
-      Beer.should have_received(:paginate_without_options).with(page:       1,
-                                                                per_page:   50,
-                                                                conditions: "beers.user_id IS NULL",
-                                                                order:      "id ASC")
-    end
-  end
-
-  %w(asc desc).each do |order|
-    it "allows #{order} as a custom sort direction" do
-      Beer.paginate(order: "id #{order}")
-      Beer.should have_received(:paginate_without_options).with(page:       1,
-                                                                per_page:   50,
-                                                                conditions: "beers.user_id IS NULL",
-                                                                order:      "id #{order.upcase}")
-    end
-  end
-
-  %w(beer `beers`.`brewer_id`).each do |order|
-    it "does not allow #{order} as a custom sort direction" do
-      Beer.paginate(order: "id #{order}")
-      Beer.should have_received(:paginate_without_options).with(page:       1,
-                                                                per_page:   50,
-                                                                conditions: "beers.user_id IS NULL",
-                                                                order:      "id ASC")
-    end
+  it "returns the scope" do
+    Beer.search({}).should == scope
   end
 end

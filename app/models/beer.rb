@@ -1,7 +1,7 @@
 class Beer < ActiveRecord::Base
   SORTABLE_COLUMNS = %w(id name created_at updated_at).freeze
 
-  include CustomPagination
+  include SearchableModel
 
   belongs_to :brewery
   belongs_to :user
@@ -13,15 +13,15 @@ class Beer < ActiveRecord::Base
 
   attr_accessible :name, :description, :abv
 
-  private
+  def self.search(options = {})
+    user  = User.find_by_public_or_private_token(options[:token]) if options[:token].present?
+    order = clean_order(options[:order], columns: SORTABLE_COLUMNS)
 
-  def self.conditions_for_pagination(options)
-    user = User.find_by_public_or_private_token(options[:token]) if options[:token].present?
-
-    if user.present?
-      ["beers.user_id IS NULL OR beers.user_id = ?", user.id]
-    else
-      "beers.user_id IS NULL"
-    end
+    scoped
+      .includes(:brewery)
+      .where(user_id: [nil, user.try(:id)].uniq)
+      .page(options[:page] || 1)
+      .per_page(options[:per_page] || 50)
+      .order(order)
   end
 end

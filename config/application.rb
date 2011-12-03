@@ -55,4 +55,4 @@ module OpenBeerDatabase
 end
 
 require "./lib/authentication"
-require "./lib/custom_pagination"
+require "./lib/searchable_model"

@@ -2,11 +2,14 @@ module SearchableModel
   extend ActiveSupport::Concern
 
   included do
-    def self.clean_order(order, options = {})
-      column, direction = order.to_s.split(" ", 2).map(&:to_s).map(&:downcase).map(&:strip)
+    def self.clean_order(order)
+      order   = order.to_s.downcase.strip
+      columns = self::SORTABLE_COLUMNS.join("|")
 
-      column    = "id"  unless options[:columns].include?(column)
-      direction = "asc" unless %w(asc desc).include?(direction)
+      _, column, direction = order.match(/^(#{columns})*\s*(asc|desc)*$/i).to_a
+
+      column    = "id"  if column.blank?
+      direction = "asc" if direction.blank?
 
       "#{column} #{direction}"
     end
@@ -30,9 +33,7 @@ module SearchableModel
     end
 
     def self.order_by(string)
-      clean_string = clean_order(string, columns: self::SORTABLE_COLUMNS)
-
-      order(clean_string)
+      order(clean_order(string))
     end
   end
 end

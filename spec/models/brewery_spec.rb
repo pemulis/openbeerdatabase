@@ -125,7 +125,7 @@ describe Brewery, ".order_by" do
   it "cleans the order string" do
     Brewery.stubs(:clean_order => "id ASC")
     Brewery.order_by("fake desc").should == name_asc
-    Brewery.should have_received(:clean_order).with("fake desc", columns: Brewery::SORTABLE_COLUMNS)
+    Brewery.should have_received(:clean_order).with("fake desc")
   end
 end
 

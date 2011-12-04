@@ -18,43 +18,92 @@ describe Beer do
   it { should validate_presence_of(:abv) }
   it { should validate_numericality_of(:abv) }
   it { should allow_mass_assignment_of(:abv) }
+
+  it "includes SearchableModel" do
+    Beer.included_modules.should include(SearchableModel)
+  end
+end
+
+describe Beer, ".filter_by_name" do
+  let(:ale)    { Factory(:beer, :name => "Ale") }
+  let(:ipa)    { Factory(:beer, :name => "IPA") }
+  let!(:beers) { [ale, ipa] }
+
+  it "filters resutls" do
+    Beer.filter_by_name("Ale").should == [ale]
+  end
+
+  it "filters results, ignoring case" do
+    Beer.filter_by_name("iPa").should == [ipa]
+  end
+
+  it "filters results, with wildcard matches" do
+    Beer.filter_by_name("a").should == beers
+  end
+
+  it "does not filter results if no name is provided" do
+    Beer.filter_by_name("").should  == beers
+    Beer.filter_by_name(" ").should == beers
+    Beer.filter_by_name(nil).should == beers
+  end
+end
+
+describe Beer, ".for_token" do
+  let!(:user) { Factory(:user) }
+  let!(:ale)  { Factory(:beer, :user => nil) }
+  let!(:ipa)  { Factory(:beer, :user => user) }
+
+  before do
+    User.stubs(:find_by_public_or_private_token)
+  end
+
+  it "includes public and private beers, provided a valid token" do
+    User.stubs(:find_by_public_or_private_token => user)
+    Beer.for_token("valid").should == [ale, ipa]
+    User.should have_received(:find_by_public_or_private_token).with("valid")
+  end
+
+  it "includes public beers, provided an invalid token" do
+    Beer.for_token("invalid").should == [ale]
+    User.should have_received(:find_by_public_or_private_token).with("invalid")
+  end
+
+  it "includes public beers, provided no token" do
+    Beer.for_token(nil).should == [ale]
+    User.should have_received(:find_by_public_or_private_token).never
+  end
 end
 
 describe Beer, ".search" do
-  let(:user)  { Factory(:user) }
-  let(:order) { "id asc" }
   let(:scope) { stub }
 
   before do
-    Beer.stubs(scoped: scope, clean_order: order)
-    User.stubs(find_by_public_or_private_token: user)
-    scope.stubs page:     scope,
-                where:    scope,
-                order:    scope,
-                includes: scope,
-                per_page: scope
+    Beer.stubs(includes: scope)
+    scope.stubs page:           scope,
+                order_by:       scope,
+                per_page:       scope,
+                for_token:      scope,
+                filter_by_name: scope
   end
 
   it "includes the brewery assocation" do
     Beer.search
-    scope.should have_received(:includes).with(:brewery)
+    Beer.should have_received(:includes).with(:brewery)
   end
 
-  it "includes public records, when no token is present" do
-    Beer.search
-    User.should have_received(:find_by_public_or_private_token).never
-    scope.should have_received(:where).with(user_id: [nil])
-  end
-
-  it "includes public and private records, when token is present" do
+  it "includes records for the token" do
     Beer.search(token: "token")
-    User.should have_received(:find_by_public_or_private_token).with("token")
-    scope.should have_received(:where).with(user_id: [nil, user.id])
+    scope.should have_received(:for_token).with("token")
+  end
+
+  it "filters by name using the query" do
+    Beer.search(query: "query")
+    scope.should have_received(:filter_by_name).with("query")
   end
 
   it "limits the query to a specific page" do
     Beer.search
-    scope.should have_received(:page).with(1)
+    scope.should have_received(:page).with(nil)
     Beer.search(page: 2)
     scope.should have_received(:page).with(2)
   end
@@ -66,25 +115,30 @@ describe Beer, ".search" do
     scope.should have_received(:per_page).with(1)
   end
 
-  it "orders the results" do
+  it "sorts the results" do
     Beer.search(order: "order")
-    Beer.should have_received(:clean_order).with("order", columns: Beer::SORTABLE_COLUMNS)
-    scope.should have_received(:order).with(order)
-  end
-
-  it "filters results by name, when a query is provided" do
-    Beer.search query: "  name  "
-    scope.should have_received(:where).twice
-    scope.should have_received(:where).with("name ILIKE ?", "%name%")
-  end
-
-  it "does not filter results by name, when no query is provided" do
-    Beer.search
-    scope.should have_received(:where).once
-    scope.should have_received(:where).with("name ILIKE ?", "%%").never
+    scope.should have_received(:order_by).with("order")
   end
 
   it "returns the scope" do
     Beer.search({}).should == scope
+  end
+end
+
+describe Beer, ".order_by" do
+  let(:ale)        { Factory(:beer, :name => "Ale") }
+  let(:ipa)        { Factory(:beer, :name => "IPA") }
+  let!(:name_asc)  { [ale, ipa] }
+  let!(:name_desc) { [ipa, ale] }
+
+  it "orders beers" do
+    Beer.order_by("name asc").should == name_asc
+    Beer.order_by("name desc").should == name_desc
+  end
+
+  it "cleans the order string" do
+    Beer.stubs(:clean_order => "id ASC")
+    Beer.order_by("fake desc").should == name_asc
+    Beer.should have_received(:clean_order).with("fake desc", columns: Beer::SORTABLE_COLUMNS)
   end
 end

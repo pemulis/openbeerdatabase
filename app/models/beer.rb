@@ -14,16 +14,11 @@ class Beer < ActiveRecord::Base
   attr_accessible :name, :description, :abv
 
   def self.search(options = {})
-    user  = User.find_by_public_or_private_token(options[:token]) if options[:token].present?
-    order = clean_order(options[:order], columns: SORTABLE_COLUMNS)
-    query = options[:query].to_s.strip
-
-    search = scoped.includes(:brewery)
-                   .where(user_id: [nil, user.try(:id)].uniq)
-                   .page(options[:page] || 1)
-                   .per_page(options[:per_page] || 50)
-                   .order(order)
-    search = search.where("name ILIKE ?", "%#{query}%") if query.present?
-    search
+    includes(:brewery)
+      .for_token(options[:token])
+      .filter_by_name(options[:query])
+      .page(options[:page])
+      .per_page(options[:per_page] || 50)
+      .order_by(options[:order])
   end
 end

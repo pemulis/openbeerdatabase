@@ -3,22 +3,22 @@ API_HOST = "api.openbeerdatabase.local"
 # Request
 
 When /^I send an API GET request to (.*)$/ do |path|
-  page.driver.get "http://#{API_HOST}#{path}"
+  get "http://#{API_HOST}#{path}"
 end
 
 When /^I send an API POST request to (.*)$/ do |path, body|
-  page.driver.post "http://#{API_HOST}#{path}", body, { "CONTENT_TYPE" => "application/json" }
+  post "http://#{API_HOST}#{path}", body, { "CONTENT_TYPE" => "application/json" }
 end
 
 When /^I send an API DELETE request to (.*)$/ do |path|
-  page.driver.delete "http://#{API_HOST}#{path}"
+  delete "http://#{API_HOST}#{path}"
 end
 
 
 # Response
 
 Then /^I should receive a (\d+) response$/ do |status|
-  page.status_code.should == status
+  last_response.status.should == status
 end
 
 Then /^the Location header should be set to (.+)$/ do |page_name|
@@ -31,20 +31,20 @@ Then /^the Location header should be set to (.+)$/ do |page_name|
                v1_brewery_url(brewery, format: :json, host: API_HOST)
              end
 
-  page.response_headers["Location"].should == location
+  last_response.headers["Location"].should == location
 end
 
 Then /^I should see the following JSON response:$/ do |expected_json|
   require "json"
   expected = JSON.pretty_generate(JSON.parse(expected_json))
-  actual   = JSON.pretty_generate(JSON.parse(page.text))
+  actual   = JSON.pretty_generate(JSON.parse(last_response.body))
   expected.should == actual
 end
 
 Then /^I should see the following JSONP response with an? "([^"]*)" callback:$/ do |callback, expected_json|
   require "json"
   expected = JSON.pretty_generate(JSON.parse(expected_json))
-  actual   = JSON.pretty_generate(JSON.parse(page.text.match(/^#{callback}\((.+)\)$/)[1]))
+  actual   = JSON.pretty_generate(JSON.parse(last_response.body.match(/^#{callback}\((.+)\)$/)[1]))
   expected.should == actual
 end
 

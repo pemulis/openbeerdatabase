@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(:version => 20111108054439) do
   create_table "beers", :force => true do |t|
     t.integer  "user_id"
     t.string   "name",        :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.float    "abv",         :null => false
     t.text     "description", :null => false
     t.integer  "brewery_id",  :null => false
@@ -28,16 +28,16 @@ ActiveRecord::Schema.define(:version => 20111108054439) do
   create_table "breweries", :force => true do |t|
     t.integer  "user_id"
     t.string   "name",       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "url"
   end
 
   add_index "breweries", ["user_id"], :name => "index_brewers_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
     t.string   "public_token",    :limit => 64,                     :null => false
     t.string   "private_token",   :limit => 64,                     :null => false
     t.string   "name",            :limit => 64,                     :null => false

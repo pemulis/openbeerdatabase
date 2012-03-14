@@ -9,6 +9,8 @@ gem "will_paginate",    "3.0.3"
 gem "yajl-ruby",        "1.1.0", require: "yajl"
 
 group :assets do
+  gem "bourbon",        "1.4.0"
+  gem "sass-rails",     "3.2.4"
   gem "yui-compressor", "0.9.6"
 end
 

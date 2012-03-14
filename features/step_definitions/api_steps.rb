@@ -10,6 +10,10 @@ When /^I send an API POST request to (.*)$/ do |path, body|
   post "http://#{API_HOST}#{path}", body, { "CONTENT_TYPE" => "application/json" }
 end
 
+When /^I send an API PUT request to (.*)$/ do |path, *body|
+  put "http://#{API_HOST}#{path}", body.first, { "CONTENT_TYPE" => "application/json" }
+end
+
 When /^I send an API DELETE request to (.*)$/ do |path|
   delete "http://#{API_HOST}#{path}"
 end
@@ -62,11 +66,27 @@ When /^I create the following beers? via the API for the "([^"]*)" brewery using
   end
 end
 
+When /^I update the "([^"]*)" beer via the API using the "([^"]*)" token:$/ do |name, token, table|
+  beer = Beer.find_by_name!(name)
+
+  table.hashes.each do |hash|
+    step %{I send an API PUT request to /v1/beers/#{beer.id}.json?token=#{token}}, { beer: hash }.to_json
+  end
+end
+
 
 # Brewery
 
 When /^I create the following (?:brewery|breweries) via the API using the "([^"]*)" token:$/ do |token, table|
   table.hashes.each do |hash|
     step %{I send an API POST request to /v1/breweries.json?token=#{token}}, { brewery: hash }.to_json
+  end
+end
+
+When /^I update the "([^"]*)" brewery via the API using the "([^"]*)" token:$/ do |name, token, table|
+  brewery = Brewery.find_by_name!(name)
+
+  table.hashes.each do |hash|
+    step %{I send an API PUT request to /v1/breweries/#{brewery.id}.json?token=#{token}}, { brewery: hash }.to_json
   end
 end

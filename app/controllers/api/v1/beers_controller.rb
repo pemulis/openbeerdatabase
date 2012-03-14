@@ -27,6 +27,21 @@ class Api::V1::BeersController < Api::V1::BaseController
     end
   end
 
+  def update
+    beer = Beer.find(params[:id])
+
+    if authorized_for?(beer)
+      if beer.update_attributes(params[:beer])
+        head :ok
+      else
+        render json:   { errors: beer.errors },
+               status: :bad_request
+      end
+    else
+      head :unauthorized
+    end
+  end
+
   def destroy
     beer = Beer.find(params[:id])
 

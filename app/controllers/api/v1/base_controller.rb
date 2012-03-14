@@ -1,5 +1,5 @@
 class Api::V1::BaseController < ApplicationController
-  before_filter :authenticate,          only:   [:create, :destroy]
+  before_filter :authenticate,          only:   [:create, :update, :destroy]
   before_filter :validate_format,       except: [:destroy]
   before_filter :validate_query_length, only:   [:index]
 

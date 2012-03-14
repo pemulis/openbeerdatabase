@@ -71,10 +71,10 @@ describe Brewery, ".search" do
 
   before do
     Brewery.stubs(for_token: scope)
-    scope.stubs page:           scope,
+    scope.stubs(page:           scope,
                 order_by:       scope,
                 per_page:       scope,
-                filter_by_name: scope
+                filter_by_name: scope)
   end
 
   it "includes records for the token" do

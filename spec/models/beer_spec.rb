@@ -24,6 +24,24 @@ describe Beer do
   end
 end
 
+describe Beer, ".filter_by_brewery_id" do
+  let(:ale)     { Factory(:beer, :brewery => brewery, :name => "Ale") }
+  let(:ipa)     { Factory(:beer, :name => "IPA") }
+  let(:stout)   { Factory(:beer, :brewery => brewery, :name => "Stout") }
+  let(:brewery) { Factory(:brewery) }
+  let!(:beers)  { [ale, ipa, stout] }
+
+  it "filters resutls" do
+    Beer.filter_by_brewery_id(brewery.id).should == [ale, stout]
+  end
+
+  it "does not filter results if no brewery ID is provided" do
+    Beer.filter_by_brewery_id("").should  == beers
+    Beer.filter_by_brewery_id(" ").should == beers
+    Beer.filter_by_brewery_id(nil).should == beers
+  end
+end
+
 describe Beer, ".filter_by_name" do
   let(:ale)    { Factory(:beer, :name => "Ale") }
   let(:ipa)    { Factory(:beer, :name => "IPA") }
@@ -79,11 +97,12 @@ describe Beer, ".search" do
 
   before do
     Beer.stubs(includes: scope)
-    scope.stubs page:           scope,
-                order_by:       scope,
-                per_page:       scope,
-                for_token:      scope,
-                filter_by_name: scope
+    scope.stubs(page:                 scope,
+                order_by:             scope,
+                per_page:             scope,
+                for_token:            scope,
+                filter_by_name:       scope,
+                filter_by_brewery_id: scope)
   end
 
   it "includes the brewery assocation" do
@@ -99,6 +118,11 @@ describe Beer, ".search" do
   it "filters by name using the query" do
     Beer.search(query: "query")
     scope.should have_received(:filter_by_name).with("query")
+  end
+
+  it "filters by brewery ID using the brewery_id" do
+    Beer.search(brewery_id: "123")
+    scope.should have_received(:filter_by_brewery_id).with("123")
   end
 
   it "limits the query to a specific page" do

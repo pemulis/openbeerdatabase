@@ -13,10 +13,19 @@ class Beer < ActiveRecord::Base
 
   attr_accessible :name, :description, :abv
 
+  def self.filter_by_brewery_id(brewery_id)
+    if brewery_id.present?
+      where(brewery_id: brewery_id)
+    else
+      where("")
+    end
+  end
+
   def self.search(options = {})
     includes(:brewery)
       .for_token(options[:token])
       .filter_by_name(options[:query])
+      .filter_by_brewery_id(options[:brewery_id])
       .page(options[:page])
       .per_page(options[:per_page] || 50)
       .order_by(options[:order])

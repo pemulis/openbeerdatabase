@@ -1,0 +1,93 @@
+<header>
+  <h1>PUT /beers/:id</h1>
+</header>
+
+<p>Updates an existing beer.</p>
+
+<h2>Parameters</h2>
+
+<p>All parameters, except token, are optional.</p>
+
+<table class="parameters">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>beer</td>
+      <td>hash</td>
+      <td>Attributes to update on the beer.</td>
+    </tr>
+    <tr class="nested">
+      <td>name</td>
+      <td>string</td>
+      <td>The name of the beer.</td>
+    </tr>
+    <tr class="nested">
+      <td>description</td>
+      <td>string</td>
+      <td>The description of the beer.</td>
+    </tr>
+    <tr class="nested">
+      <td>abv</td>
+      <td>float</td>
+      <td>The alcohol by volume of the beer.</td>
+    </tr>
+    <tr>
+      <td>token</td>
+      <td>string</td>
+      <td>The API token of the user who created this beer. <span>Private only.</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Errors</h2>
+
+<table class="errors">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>400</td>
+      <td>Invalid record. Responds with <a href="/documentation/errors">a JSON object containing errors</a>.</td>
+    </tr>
+    <tr>
+      <td>401</td>
+      <td>Unauthorized.</td>
+    </tr>
+    <tr>
+      <td>404</td>
+      <td>Not found.</td>
+    </tr>
+    <tr>
+      <td>406</td>
+      <td>Invalid format.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Example</h2>
+
+<div class="highlight"><pre><code class="js">PUT /v1/beers/<span class="variable">id</span>.json HTTP/1.1
+Host: api.openbeerdatabase.com
+Content-Type: application/json; charset=utf-8
+Content-Length: <span class="variable">length</span>
+
+<span class="p">{</span> <span class="s2">&#34;beer&#34;</span> <span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&#34;name&#34;</span>        <span class="o">:</span> <span class="s2">&#34;Strawberry Harvest&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;description&#34;</span> <span class="o">:</span> <span class="s2">&#34;Strawberry Harvest Lager is a wheat beer ...&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;abv&#34;</span>         <span class="o">:</span> <span class="mi">4.2</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="highlight"><pre><code>HTTP/1.1 200 OK</code></pre></div>

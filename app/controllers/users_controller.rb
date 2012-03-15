@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, only: [:show]
-  before_filter :find_user,    only: [:show]
-  before_filter :authorize,    only: [:show]
+  before_filter :authenticate,
+                :find_user,
+                :authorize, only: [:show]
 
   def show
   end

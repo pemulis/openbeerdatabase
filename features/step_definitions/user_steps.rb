@@ -35,17 +35,17 @@ end
 Then /^I should see the API tokens for the "([^"]*)" account$/ do |name|
   user = User.find_by_name!(name)
 
-  page.should have_content(user.public_token)
-  page.should have_content(user.private_token)
+  should have_content(user.public_token)
+  should have_content(user.private_token)
 end
 
 Then /^I should not see the API tokens for the "([^"]*)" account$/ do |name|
   user = User.find_by_name!(name)
 
-  page.should_not have_content(user.public_token)
-  page.should_not have_content(user.private_token)
+  should_not have_content(user.public_token)
+  should_not have_content(user.private_token)
 end
 
 Then /^I should be told to enter valid information$/ do
-  page.should have_content("can't be blank")
+  should have_content("can't be blank")
 end

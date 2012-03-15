@@ -9,31 +9,6 @@ Feature: Create a brewery
       | public_token | private_token |
       | a1b2c3       | x1y2z3        |
 
-  Scenario Outline:
-    When I send an API POST request to /v1/breweries.<format>?token=<token>
-      """
-      <body>
-      """
-    Then I should receive a <status> response
-
-  Examples:
-    | body                                 | token  | status | format |
-    | { "brewery" : { "name" : "Abita" } } | a1b2c3 | 401    | json   |
-    | { "brewery" : {} }                   | a1b2c3 | 401    | json   |
-    | {}                                   | a1b2c3 | 401    | json   |
-    |                                      | a1b2c3 | 401    | json   |
-    | { "brewery" : { "name" : "Abita" } } | a1b2c3 | 401    | xml    |
-    | { "brewery" : { "name" : "Abita" } } | x1y2z3 | 201    | json   |
-    | { "brewery" : {} }                   | x1y2z3 | 400    | json   |
-    | {}                                   | x1y2z3 | 400    | json   |
-    |                                      | x1y2z3 | 400    | json   |
-    | { "brewery" : { "name" : "Abita" } } | x1y2z3 | 406    | xml    |
-    | { "brewery" : { "name" : "Abita" } } |        | 401    | json   |
-    | { "brewery" : {} }                   |        | 401    | json   |
-    | {}                                   |        | 401    | json   |
-    |                                      |        | 401    | json   |
-    | { "brewery" : { "name" : "Abita" } } |        | 401    | xml    |
-
   Scenario: Creating a brewery with a private token
     When I create the following brewery via the API using the "x1y2z3" token:
       | name          |
@@ -64,3 +39,27 @@ Feature: Create a brewery
           }
         }
       """
+
+  Scenario Outline:
+    When I send an API POST request to /v1/breweries.<format>?token=<token>
+      """
+      <body>
+      """
+    Then I should receive a <status> response
+
+  Examples:
+    | body                                 | token  | status | format |
+    | { "brewery" : { "name" : "Abita" } } | a1b2c3 | 401    | json   |
+    | { "brewery" : {} }                   | a1b2c3 | 401    | json   |
+    | {}                                   | a1b2c3 | 401    | json   |
+    |                                      | a1b2c3 | 401    | json   |
+    | { "brewery" : { "name" : "Abita" } } | a1b2c3 | 401    | xml    |
+    | { "brewery" : {} }                   | x1y2z3 | 400    | json   |
+    | {}                                   | x1y2z3 | 400    | json   |
+    |                                      | x1y2z3 | 400    | json   |
+    | { "brewery" : { "name" : "Abita" } } | x1y2z3 | 406    | xml    |
+    | { "brewery" : { "name" : "Abita" } } |        | 401    | json   |
+    | { "brewery" : {} }                   |        | 401    | json   |
+    | {}                                   |        | 401    | json   |
+    |                                      |        | 401    | json   |
+    | { "brewery" : { "name" : "Abita" } } |        | 401    | xml    |

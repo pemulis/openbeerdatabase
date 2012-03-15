@@ -9,28 +9,6 @@ Feature: Create a beer
       | public_token | private_token |
       | a1b2c3       | x1y2z3        |
 
-  Scenario Outline:
-    When I send an API POST request to /v1/beers.<format>?token=<token>
-      """
-      <body>
-      """
-    Then I should receive a <status> response
-
-  Examples:
-    | body            | token  | status | format |
-    | { "beer" : {} } | a1b2c3 | 401    | json   |
-    | {}              | a1b2c3 | 401    | json   |
-    |                 | a1b2c3 | 401    | json   |
-    | { "beer" : {} } | a1b2c3 | 401    | xml    |
-    | { "beer" : {} } | x1y2z3 | 400    | json   |
-    | {}              | x1y2z3 | 400    | json   |
-    |                 | x1y2z3 | 400    | json   |
-    | { "beer" : {} } | x1y2z3 | 406    | xml    |
-    | { "beer" : {} } |        | 401    | json   |
-    | {}              |        | 401    | json   |
-    |                 |        | 401    | json   |
-    | { "beer" : {} } |        | 401    | xml    |
-
   Scenario: Creating a beer with a private token
     Given the following brewery exists:
       | user                  | name  |
@@ -78,3 +56,27 @@ Feature: Create a beer
           }
         }
       """
+
+  Scenario Outline:
+    When I send an API POST request to /v1/beers.<format>?token=<token>
+      """
+      <body>
+      """
+    Then I should receive a <status> response
+
+  Examples:
+    | body                              | token  | status | format |
+    | { "beer" : { "name" : "Amber" } } | a1b2c3 | 401    | json   |
+    | { "beer" : {} }                   | a1b2c3 | 401    | json   |
+    | {}                                | a1b2c3 | 401    | json   |
+    |                                   | a1b2c3 | 401    | json   |
+    | { "beer" : { "name" : "Amber" } } | a1b2c3 | 401    | xml    |
+    | { "beer" : {} }                   | x1y2z3 | 400    | json   |
+    | {}                                | x1y2z3 | 400    | json   |
+    |                                   | x1y2z3 | 400    | json   |
+    | { "beer" : { "name" : "Amber" } } | x1y2z3 | 406    | xml    |
+    | { "beer" : { "name" : "Amber" } } |        | 401    | json   |
+    | { "beer" : {} }                   |        | 401    | json   |
+    | {}                                |        | 401    | json   |
+    |                                   |        | 401    | json   |
+    | { "beer" : { "name" : "Amber" } } |        | 401    | xml    |

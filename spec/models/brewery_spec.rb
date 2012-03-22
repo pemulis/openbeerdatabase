@@ -17,8 +17,8 @@ describe Brewery do
 end
 
 describe Brewery, ".filter_by_name" do
-  let(:abita)      { Factory(:brewery, :name => "Abita") }
-  let(:harpoon)    { Factory(:brewery, :name => "Harpoon") }
+  let(:abita)      { create(:brewery, :name => "Abita") }
+  let(:harpoon)    { create(:brewery, :name => "Harpoon") }
   let!(:breweries) { [abita, harpoon] }
 
   it "filters resutls" do
@@ -41,9 +41,9 @@ describe Brewery, ".filter_by_name" do
 end
 
 describe Brewery, ".for_token" do
-  let!(:user)    { Factory(:user) }
-  let!(:abita)   { Factory(:brewery, :user => nil) }
-  let!(:harpoon) { Factory(:brewery, :user => user) }
+  let!(:user)    { create(:user) }
+  let!(:abita)   { create(:brewery, :user => nil) }
+  let!(:harpoon) { create(:brewery, :user => user) }
 
   before do
     User.stubs(:find_by_public_or_private_token)
@@ -112,8 +112,8 @@ describe Brewery, ".search" do
 end
 
 describe Brewery, ".order_by" do
-  let(:abita)      { Factory(:brewery, :name => "Abita") }
-  let(:harpoon)    { Factory(:brewery, :name => "Harpoon") }
+  let(:abita)      { create(:brewery, :name => "Abita") }
+  let(:harpoon)    { create(:brewery, :name => "Harpoon") }
   let!(:name_asc)  { [abita, harpoon] }
   let!(:name_desc) { [harpoon, abita] }
 
@@ -148,7 +148,7 @@ describe Brewery, "url" do
       "http://example.com.",
       "http://example.com./foo"
     ].each do |url|
-      Factory.build(:brewery, url: url).should be_valid
+      build(:brewery, url: url).should be_valid
     end
   end
 
@@ -167,20 +167,20 @@ describe Brewery, "url" do
      "http://example.c",
      "http://example.toolongtld"
     ].each do |url|
-      Factory.build(:brewery, url: url).should_not be_valid
+      build(:brewery, url: url).should_not be_valid
     end
   end
 end
 
 describe Brewery, "being destroyed" do
-  subject { Factory(:brewery) }
+  subject { create(:brewery) }
 
   it "is destroyed when it has zero beers" do
     subject.destroy.should be_true
   end
 
   it "is not destroyed when it has beers" do
-    Factory(:beer, brewery: subject)
+    create(:beer, brewery: subject)
     subject.destroy.should be_false
   end
 end

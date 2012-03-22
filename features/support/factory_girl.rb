@@ -21,3 +21,5 @@ FactoryGirl.factories.each do |factory|
     end
   end
 end
+
+World(FactoryGirl::Syntax::Methods)

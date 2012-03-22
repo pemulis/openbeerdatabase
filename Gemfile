@@ -22,7 +22,7 @@ group :test do
   gem "bourne",             "1.1.1"
   gem "cucumber-rails",     "1.3.0", require: false
   gem "database_cleaner",   "0.7.2"
-  gem "factory_girl_rails", "1.7.0"
+  gem "factory_girl_rails", "2.0.0.rc"
   gem "rspec-rails",        "2.9.0"
   gem "shoulda-matchers",   "1.0.0"
 end

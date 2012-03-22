@@ -25,10 +25,10 @@ describe Beer do
 end
 
 describe Beer, ".filter_by_brewery_id" do
-  let(:ale)     { Factory(:beer, :brewery => brewery, :name => "Ale") }
-  let(:ipa)     { Factory(:beer, :name => "IPA") }
-  let(:stout)   { Factory(:beer, :brewery => brewery, :name => "Stout") }
-  let(:brewery) { Factory(:brewery) }
+  let(:ale)     { create(:beer, :brewery => brewery, :name => "Ale") }
+  let(:ipa)     { create(:beer, :name => "IPA") }
+  let(:stout)   { create(:beer, :brewery => brewery, :name => "Stout") }
+  let(:brewery) { create(:brewery) }
   let!(:beers)  { [ale, ipa, stout] }
 
   it "filters resutls" do
@@ -43,8 +43,8 @@ describe Beer, ".filter_by_brewery_id" do
 end
 
 describe Beer, ".filter_by_name" do
-  let(:ale)    { Factory(:beer, :name => "Ale") }
-  let(:ipa)    { Factory(:beer, :name => "IPA") }
+  let(:ale)    { create(:beer, :name => "Ale") }
+  let(:ipa)    { create(:beer, :name => "IPA") }
   let!(:beers) { [ale, ipa] }
 
   it "filters resutls" do
@@ -67,9 +67,9 @@ describe Beer, ".filter_by_name" do
 end
 
 describe Beer, ".for_token" do
-  let!(:user) { Factory(:user) }
-  let!(:ale)  { Factory(:beer, :user => nil) }
-  let!(:ipa)  { Factory(:beer, :user => user) }
+  let!(:user) { create(:user) }
+  let!(:ale)  { create(:beer, :user => nil) }
+  let!(:ipa)  { create(:beer, :user => user) }
 
   before do
     User.stubs(:find_by_public_or_private_token)
@@ -150,8 +150,8 @@ describe Beer, ".search" do
 end
 
 describe Beer, ".order_by" do
-  let(:ale)        { Factory(:beer, :name => "Ale") }
-  let(:ipa)        { Factory(:beer, :name => "IPA") }
+  let(:ale)        { create(:beer, :name => "Ale") }
+  let(:ipa)        { create(:beer, :name => "IPA") }
   let!(:name_asc)  { [ale, ipa] }
   let!(:name_desc) { [ipa, ale] }
 

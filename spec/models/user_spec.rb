@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe User do
-  subject { Factory(:user) }
+  subject { create(:user) }
 
   it { should have_many(:beers) }
   it { should have_many(:breweries) }
@@ -17,48 +17,48 @@ end
 
 describe User, "being created" do
   it "requires a name" do
-    Factory.build(:user, name: nil).should_not be_valid
+    build(:user, name: nil).should_not be_valid
   end
 
   it "requires an e-mail" do
-    Factory.build(:user, email: nil).should_not be_valid
+    build(:user, email: nil).should_not be_valid
   end
 
   it "requires a valid e-mail" do
-    Factory.build(:user, email: "@.com").should_not be_valid
+    build(:user, email: "@.com").should_not be_valid
   end
 
   it "requires a unique e-mail" do
-    user = Factory(:user)
+    user = create(:user)
 
-    Factory.build(:user, email: user.email.upcase).should_not be_valid
+    build(:user, email: user.email.upcase).should_not be_valid
   end
 
   it "requires a password" do
-    Factory.build(:user, password: nil).should_not be_valid
+    build(:user, password: nil).should_not be_valid
   end
 
   it "requires a password confirmation" do
-    Factory.build(:user, password_confirmation: nil).should_not be_valid
+    build(:user, password_confirmation: nil).should_not be_valid
   end
 
   it "requires password to match confirmation" do
-    Factory.build(:user, password: "nope").should_not be_valid
+    build(:user, password: "nope").should_not be_valid
   end
 
   it "downcases e-mail" do
-    Factory(:user, email: "SoMe@GuY.com").email.should == "some@guy.com"
+    create(:user, email: "SoMe@GuY.com").email.should == "some@guy.com"
   end
 
   it "generates a public API token" do
-    user = Factory.build(:user)
+    user = build(:user)
     user.public_token.should be_nil
     user.save
     user.public_token.should_not be_nil
   end
 
   it "generates a private API token" do
-    user = Factory.build(:user)
+    user = build(:user)
     user.private_token.should be_nil
     user.save
     user.private_token.should_not be_nil
@@ -66,7 +66,7 @@ describe User, "being created" do
 end
 
 describe User, "being updated" do
-  subject { Factory(:user) }
+  subject { create(:user) }
 
   let!(:public_token) { subject.public_token.to_s }
   let!(:private_token) { subject.private_token.to_s }
@@ -85,7 +85,7 @@ describe User, "being updated" do
 end
 
 describe User, ".authenticate" do
-  let(:user)     { Factory(:user) }
+  let(:user)     { create(:user) }
   let(:email)    { user.email }
   let(:password) { "test" }
 
@@ -103,7 +103,7 @@ describe User, ".authenticate" do
 end
 
 describe User, ".find_by_public_or_private_token" do
-  let(:user) { Factory(:user) }
+  let(:user) { create(:user) }
 
   it "finds a user by public token" do
     User.find_by_public_or_private_token(user.public_token).should == user
@@ -115,10 +115,10 @@ describe User, ".find_by_public_or_private_token" do
 end
 
 describe User, "#can_access?" do
-  subject { Factory(:user) }
+  subject { create(:user) }
 
-  let(:user_beer)  { Factory(:beer, user: subject) }
-  let(:other_beer) { Factory(:beer) }
+  let(:user_beer)  { create(:beer, user: subject) }
+  let(:other_beer) { create(:beer) }
 
   it "returns true when the record is owned by the user" do
     subject.can_access?(user_beer).should == true

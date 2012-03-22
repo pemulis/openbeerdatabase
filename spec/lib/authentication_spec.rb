@@ -90,7 +90,7 @@ describe Authentication, "#current_user" do
     end
 
     describe "and a user is found in the session" do
-      let(:user) { Factory.stub(:user) }
+      let(:user) { build_stubbed(:user) }
 
       before do
         subject.stubs(user_from_session: user)
@@ -103,7 +103,7 @@ describe Authentication, "#current_user" do
     end
 
     describe "and a user is found via API token" do
-      let(:user) { Factory.stub(:user) }
+      let(:user) { build_stubbed(:user) }
 
       before do
         subject.stubs(user_from_token: user)
@@ -134,7 +134,7 @@ describe Authentication, "#current_user=" do
   end
 
   describe "when assigned a user" do
-    let(:user) { Factory.stub(:user) }
+    let(:user) { build_stubbed(:user) }
 
     before do
       subject.current_user = user
@@ -181,7 +181,7 @@ end
 describe Authentication, "#user_from_session" do
   subject { ExampleController.new }
 
-  let(:user)    { Factory.stub(:user) }
+  let(:user)    { build_stubbed(:user) }
   let(:session) { {} }
 
   before do
@@ -223,7 +223,7 @@ end
 describe Authentication, "#user_from_token" do
   subject { ExampleController.new }
 
-  let(:user)    { Factory.stub(:user) }
+  let(:user)    { build_stubbed(:user) }
   let(:token)   { "a1b2c3" }
   let(:params)  { {} }
   let(:request) { stub }

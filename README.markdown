@@ -1,4 +1,4 @@
-# Open Beer Database [![Build Status](https://secure.travis-ci.org/tristandunn/openbeerdatabase.png?branch=master)](http://travis-ci.org/tristandunn/openbeerdatabase)
+# Open Beer Database [![Build Status](https://secure.travis-ci.org/tristandunn/openbeerdatabase.png?branch=master)](http://travis-ci.org/tristandunn/openbeerdatabase) [![Dependency Status](https://gemnasium.com/tristandunn/openbeerdatabase.png)](https://gemnasium.com/tristandunn/openbeerdatabase)
 
 A free, public database and API for beer information.
 

@@ -10,19 +10,19 @@ gem "yajl-ruby",        "1.1.0", require: "yajl"
 
 group :assets do
   gem "bourbon",        "1.4.0"
-  gem "sass-rails",     "3.2.4"
+  gem "sass-rails",     "3.2.5"
   gem "yui-compressor", "0.9.6"
 end
 
 group :development do
-  gem "rspec-rails", "2.8.1"
+  gem "rspec-rails", "2.9.0"
 end
 
 group :test do
   gem "bourne",             "1.1.1"
   gem "cucumber-rails",     "1.3.0", require: false
-  gem "database_cleaner",   "0.7.1"
+  gem "database_cleaner",   "0.7.2"
   gem "factory_girl_rails", "1.7.0"
-  gem "rspec-rails",        "2.8.1"
+  gem "rspec-rails",        "2.9.0"
   gem "shoulda-matchers",   "1.0.0"
 end

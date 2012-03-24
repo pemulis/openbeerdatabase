@@ -25,9 +25,9 @@ describe Beer do
 end
 
 describe Beer, ".filter_by_brewery_id" do
-  let(:ale)     { create(:beer, :brewery => brewery, :name => "Ale") }
-  let(:ipa)     { create(:beer, :name => "IPA") }
-  let(:stout)   { create(:beer, :brewery => brewery, :name => "Stout") }
+  let(:ale)     { create(:beer, brewery: brewery, name: "Ale") }
+  let(:ipa)     { create(:beer, name: "IPA") }
+  let(:stout)   { create(:beer, brewery: brewery, name: "Stout") }
   let(:brewery) { create(:brewery) }
   let!(:beers)  { [ale, ipa, stout] }
 
@@ -43,8 +43,8 @@ describe Beer, ".filter_by_brewery_id" do
 end
 
 describe Beer, ".filter_by_name" do
-  let(:ale)    { create(:beer, :name => "Ale") }
-  let(:ipa)    { create(:beer, :name => "IPA") }
+  let(:ale)    { create(:beer, name: "Ale") }
+  let(:ipa)    { create(:beer, name: "IPA") }
   let!(:beers) { [ale, ipa] }
 
   it "filters resutls" do
@@ -68,15 +68,15 @@ end
 
 describe Beer, ".for_token" do
   let!(:user) { create(:user) }
-  let!(:ale)  { create(:beer, :user => nil) }
-  let!(:ipa)  { create(:beer, :user => user) }
+  let!(:ale)  { create(:beer, user: nil) }
+  let!(:ipa)  { create(:beer, user: user) }
 
   before do
     User.stubs(:find_by_public_or_private_token)
   end
 
   it "includes public and private beers, provided a valid token" do
-    User.stubs(:find_by_public_or_private_token => user)
+    User.stubs(find_by_public_or_private_token: user)
     Beer.for_token("valid").should == [ale, ipa]
     User.should have_received(:find_by_public_or_private_token).with("valid")
   end
@@ -150,8 +150,8 @@ describe Beer, ".search" do
 end
 
 describe Beer, ".order_by" do
-  let(:ale)        { create(:beer, :name => "Ale") }
-  let(:ipa)        { create(:beer, :name => "IPA") }
+  let(:ale)        { create(:beer, name: "Ale") }
+  let(:ipa)        { create(:beer, name: "IPA") }
   let!(:name_asc)  { [ale, ipa] }
   let!(:name_desc) { [ipa, ale] }
 
@@ -161,7 +161,7 @@ describe Beer, ".order_by" do
   end
 
   it "cleans the order string" do
-    Beer.stubs(:clean_order => "id ASC")
+    Beer.stubs(clean_order: "id ASC")
     Beer.order_by("fake desc").should == name_asc
     Beer.should have_received(:clean_order).with("fake desc")
   end

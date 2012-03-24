@@ -17,8 +17,8 @@ describe Brewery do
 end
 
 describe Brewery, ".filter_by_name" do
-  let(:abita)      { create(:brewery, :name => "Abita") }
-  let(:harpoon)    { create(:brewery, :name => "Harpoon") }
+  let(:abita)      { create(:brewery, name: "Abita") }
+  let(:harpoon)    { create(:brewery, name: "Harpoon") }
   let!(:breweries) { [abita, harpoon] }
 
   it "filters resutls" do
@@ -42,15 +42,15 @@ end
 
 describe Brewery, ".for_token" do
   let!(:user)    { create(:user) }
-  let!(:abita)   { create(:brewery, :user => nil) }
-  let!(:harpoon) { create(:brewery, :user => user) }
+  let!(:abita)   { create(:brewery, user: nil) }
+  let!(:harpoon) { create(:brewery, user: user) }
 
   before do
     User.stubs(:find_by_public_or_private_token)
   end
 
   it "includes public and private breweries, provided a valid token" do
-    User.stubs(:find_by_public_or_private_token => user)
+    User.stubs(find_by_public_or_private_token: user)
     Brewery.for_token("valid").should == [abita, harpoon]
     User.should have_received(:find_by_public_or_private_token).with("valid")
   end
@@ -112,8 +112,8 @@ describe Brewery, ".search" do
 end
 
 describe Brewery, ".order_by" do
-  let(:abita)      { create(:brewery, :name => "Abita") }
-  let(:harpoon)    { create(:brewery, :name => "Harpoon") }
+  let(:abita)      { create(:brewery, name: "Abita") }
+  let(:harpoon)    { create(:brewery, name: "Harpoon") }
   let!(:name_asc)  { [abita, harpoon] }
   let!(:name_desc) { [harpoon, abita] }
 
@@ -123,7 +123,7 @@ describe Brewery, ".order_by" do
   end
 
   it "cleans the order string" do
-    Brewery.stubs(:clean_order => "id ASC")
+    Brewery.stubs(clean_order: "id ASC")
     Brewery.order_by("fake desc").should == name_asc
     Brewery.should have_received(:clean_order).with("fake desc")
   end

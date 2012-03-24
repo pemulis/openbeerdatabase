@@ -53,18 +53,21 @@ body > header {
   }
 
   h2 {
-    @include position(absolute, 0 0 -12px 66px);
-
+    position: absolute;
+    bottom: -12px;
+    left: 66px;
     font: normal 12px/1 "Helvetica Neue Light", HelveticaNeue-Light, Helvetica, Arial, Sans-serif;
   }
 }
 
 #sign-up a {
-  @include position(absolute, 8px 4px 0 0);
   @include inline-block;
   @include border-radius(6px);
   @include linear-gradient(-90deg, #6EAE3C 0%, #6EAE3C 50%, #53961F 50%, #53961F 100%);
 
+  position: absolute;
+  top: 8px;
+  right: 4px;
   background-color: #6EAE3C;
   color: #FFF;
   padding: 10px 16px 12px 46px;
@@ -81,8 +84,9 @@ body > header {
   }
 
   &:before {
-    @include position(absolute, 6px 0 0 12px);
-
+    position: absolute;
+    top: 6px;
+    left: 12px;
     background: transparent;
     color: #FFF;
     font: 32px "IconicStroke";
@@ -91,16 +95,18 @@ body > header {
 }
 
 #sign-in {
-  @include position(absolute, 50px 4px 0 0);
-
+  position: absolute;
+  top: 50px;
+  right: 4px;
   width: 247px;
   font: normal 11px/1 "Helvetica Neue Light", HelveticaNeue-Light, Helvetica, Arial, Sans-serif;
   text-align: center;
 }
 
 #current-user {
-  @include position(absolute, 25px 4px 0 0);
-
+  position: absolute;
+  top: 25px;
+  right: 4px;
   font: normal 12px/1 "Helvetica Neue Light", HelveticaNeue-Light, Helvetica, Arial, Sans-serif;
 }
 
@@ -218,8 +224,9 @@ section {
     border: 1px solid #EEB;
 
     &:before {
-      @include position(absolute, 5px 0 0 10px);
-
+      position: absolute;
+      top: 5px;
+      left: 10px;
       color: #222;
       font-size: 24px;
       font-family: "IconicStroke";
@@ -285,8 +292,9 @@ section {
       line-height: 1;
 
       &:before {
-        @include position(absolute, 4px 0 0 0px);
-
+        position: absolute;
+        top: 4px;
+        left: 0;
         color: #222;
         font-size: 18px;
         font-family: "IconicStroke";

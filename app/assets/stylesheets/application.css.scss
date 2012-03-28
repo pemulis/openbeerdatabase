@@ -379,6 +379,8 @@ table {
 }
 
 footer {
+  @include clearfix;
+
   margin: 48px auto 0 auto !important;
   padding: 8px 0 0 8px;
   border-top: 1px solid #EEE;
@@ -388,6 +390,10 @@ footer {
     background: transparent;
     color: #555;
     font-weight: bold;
+  }
+
+  p.license {
+    float: right;
   }
 }
 

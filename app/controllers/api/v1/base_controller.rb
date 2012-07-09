@@ -3,6 +3,8 @@ class Api::V1::BaseController < ApplicationController
   before_filter :validate_format,       except: [:destroy]
   before_filter :validate_query_length, only:   [:index]
 
+  skip_before_filter :verify_authenticity_token
+
   rescue_from ActiveRecord::RecordNotFound do
     head :not_found
   end

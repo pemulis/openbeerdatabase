@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   validates :public_token,          presence: true
   validates :private_token,         presence: true
 
-  attr_protected :public_token, :private_token, :administrator
+  attr_accessible :name, :email, :password, :password_confirmation
 
   before_save       :clean_attributes
   before_validation :generate_tokens, on: :create

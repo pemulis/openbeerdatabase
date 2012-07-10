@@ -1,13 +1,9 @@
-class Api::V1::BeersPresenter < ApiPresenter
-  def initialize(beers)
-    @beers = beers
+class Api::V1::BeersPresenter < Api::V1::CollectionPresenter
+  def klass
+    Api::V1::BeerPresenter
   end
 
-  def as_json
-    { page:  @beers.current_page,
-      pages: @beers.total_pages,
-      total: @beers.total_entries,
-      beers: @beers.collect { |beer| Api::V1::BeerPresenter.new(beer) }
-    }
+  def type
+    :beers
   end
 end

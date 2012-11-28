@@ -1,10 +1,10 @@
 When /^I sign up as "([^"]*)"$/ do |name|
   visit        root_path
   click_link   "Sign up for an API token."
-  fill_in      "Name", with: name
-  fill_in      "E-mail", with: "#{name.underscore}@example.com"
-  fill_in      "Password", with: "test"
-  fill_in      "Password Confirmation", with: "test"
+  fill_in      "user_name", with: name
+  fill_in      "user_email", with: "#{name.underscore}@example.com"
+  fill_in      "user_password", with: "test"
+  fill_in      "user_password_confirmation", with: "test"
   click_button "Sign Up"
 end
 

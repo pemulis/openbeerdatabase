@@ -19,7 +19,7 @@ group :development do
 end
 
 group :test do
-  gem "bourne",             "1.2.0"
+  gem "bourne",             "1.2.1"
   gem "cucumber-rails",     "1.3.0", require: false
   gem "database_cleaner",   "0.9.1"
   gem "factory_girl_rails", "4.1.0"

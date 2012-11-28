@@ -4,11 +4,11 @@
 
 <h2>Code</h2>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script&gt;</span>
-<span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="s1">&#39;http://api.openbeerdatabase.com/v1/breweries.json?callback=?&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="s1">&#34;http://api.openbeerdatabase.com/v1/breweries.json?callback=?&#34;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">$</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">breweries</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#example-breweries&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;li&gt;&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">text</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="p">}));</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#34;#example-breweries&#34;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#34;&lt;li&gt;&#34;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">text</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="p">}));</span>
   <span class="p">});</span>
 <span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
@@ -20,7 +20,7 @@
 <ol id="example-breweries"></ol>
 
 <% content_for :javascript do -%>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
 $.getJSON("http://api.openbeerdatabase.com/v1/breweries.json?callback=?", function(response) {
   var breweries = $("#example-breweries");

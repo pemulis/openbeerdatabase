@@ -1,4 +1,4 @@
-# Open Beer Database [![Build Status](https://secure.travis-ci.org/tristandunn/openbeerdatabase.png?branch=master)](http://travis-ci.org/tristandunn/openbeerdatabase) [![Dependency Status](https://gemnasium.com/tristandunn/openbeerdatabase.png)](https://gemnasium.com/tristandunn/openbeerdatabase)
+# Open Beer Database [![Build Status](https://secure.travis-ci.org/openbeerdatabase/openbeerdatabase.png?branch=master)](http://travis-ci.org/openbeerdatabase/openbeerdatabase) [![Dependency Status](https://gemnasium.com/openbeerdatabase/openbeerdatabase.png)](https://gemnasium.com/openbeerdatabase/openbeerdatabase)
 
 A free, public database and API for beer information.
 
@@ -16,7 +16,7 @@ A free, public database and API for beer information.
 
 ## Bug Reports & Feature Requests
 
-Please use [GitHub Issues](https://github.com/tristandunn/openbeerdatabase/issues) to report bugs or request features.
+Please use [GitHub Issues](https://github.com/openbeerdatabase/openbeerdatabase/issues) to report bugs or request features.
 
 ## Contributing
 

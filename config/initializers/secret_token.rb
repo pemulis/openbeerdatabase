@@ -1,1 +1,5 @@
-OpenBeerDatabase::Application.config.secret_token = "1f72e98f3a9890ae010b4150d4ab675744df21c2a786485652225f2624453a15da27b9730067175f5b92b208cfba38087937b990359ccf5caeb78239a4ba9c3d"
+if Rails.env.production?
+  OpenBeerDatabase::Application.config.secret_token = ENV["SECRET_TOKEN"]
+else
+  OpenBeerDatabase::Application.config.secret_token = SecureRandom.hex(128)
+end

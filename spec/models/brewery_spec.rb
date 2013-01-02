@@ -184,3 +184,13 @@ describe Brewery, "being destroyed" do
     subject.destroy.should be_false
   end
 end
+
+describe Brewery, "#public?" do
+  it "returns true when no user is present" do
+    create(:brewery, user: nil).should be_public
+  end
+
+  it "returns false when a user is present" do
+    create(:brewery, user: build(:user)).should_not be_public
+  end
+end

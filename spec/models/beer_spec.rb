@@ -166,3 +166,13 @@ describe Beer, ".order_by" do
     Beer.should have_received(:clean_order).with("fake desc")
   end
 end
+
+describe Beer, "public?" do
+  it "returns true when no user is present" do
+    create(:beer, user: nil).should be_public
+  end
+
+  it "returns false when a user is present" do
+    create(:beer, user: build(:user)).should_not be_public
+  end
+end

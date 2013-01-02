@@ -16,7 +16,8 @@ class Api::V1::BaseController < ApplicationController
   end
 
   def authorized_for?(record)
-    signed_in? && current_user.can_access?(record)
+    (request.get? && record.public?) ||
+      (signed_in? && current_user.can_access?(record))
   end
 
   def validate_format

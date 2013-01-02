@@ -25,6 +25,10 @@ class Brewery < ActiveRecord::Base
       .order_by(options[:order])
   end
 
+  def public?
+    user_id.nil?
+  end
+
   private
 
   def ensure_no_associated_beers_exist

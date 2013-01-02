@@ -30,4 +30,8 @@ class Beer < ActiveRecord::Base
       .per_page(options[:per_page] || 50)
       .order_by(options[:order])
   end
+
+  def public?
+    user_id.nil?
+  end
 end

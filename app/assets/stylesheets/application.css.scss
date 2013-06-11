@@ -62,7 +62,7 @@ body > header {
 
 #sign-up a {
   @include inline-block;
-  @include linear-gradient(-90deg, #6EAE3C 0%, #6EAE3C 50%, #53961F 50%, #53961F 100%);
+  @include linear-gradient(#6EAE3C 0%, #6EAE3C 50%, #53961F 50%, #53961F 100%);
 
   position: absolute;
   top: 8px;

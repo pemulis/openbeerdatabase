@@ -7,6 +7,7 @@ class Brewery < ActiveRecord::Base
   belongs_to :user
 
   validates :name, presence: true, length: { maximum: 255 }
+  validates_uniqueness_of :name
   validates :url,  length: { maximum: 255 },
                    format: {
                      with:      %r{\Ahttps?://((([\w_]+\.)*)?[\w_]+([-.][\w_]+)*\.[a-z]{2,6}\.?)([/?]\S*)?\Z}i,
